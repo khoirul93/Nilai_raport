@@ -1,0 +1,216 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{40981DAE-DC65-4DEB-BEC6-1FC116B74232}</ProjectGuid>
+			<ProjectVersion>12.0</ProjectVersion>
+			<MainSource>Aplikasi_Raport1.dpr</MainSource>
+			<Config Condition="'$(Config)'==''">Debug</Config>
+			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+			<Cfg_1>true</Cfg_1>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+			<Cfg_2>true</Cfg_2>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_UsePackage>vclx;vcl;vclimg;dbrtl;Rave77VCL;bdertl;rtl;vclactnband;xmlrtl;vcldb;vcldbx;vcltouch;dsnap;dsnapcon;TeeUI;TeeDB;Tee;vclib;ibxpress;adortl;IndyCore;IndySystem;IndyProtocols;inet;intrawebdb_100_140;Intraweb_100_140;VclSmp;vclie;websnap;webdsnap;inetdb;inetdbbde;inetdbxpress;soaprtl;vclribbon;dbexpress;DbxCommonDriver;DataSnapIndy10ServerTransport;DataSnapProviderClient;DbxClientDriver;DataSnapServer;DBXInterBaseDriver;DBXMySQLDriver;dbxcds;DBXFirebirdDriver;DBXSybaseASEDriver;DBXSybaseASADriver;DBXOracleDriver;DBXMSSQLDriver;DBXInformixDriver;DBXDb2Driver;acnt2010_R</DCC_UsePackage>
+			<DCC_DependencyCheckOutputName>Aplikasi_Raport1.exe</DCC_DependencyCheckOutputName>
+			<DCC_ImageBase>00400000</DCC_ImageBase>
+			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;$(DCC_UnitAlias)</DCC_UnitAlias>
+			<DCC_Platform>x86</DCC_Platform>
+			<DCC_E>false</DCC_E>
+			<DCC_N>false</DCC_N>
+			<DCC_S>false</DCC_S>
+			<DCC_F>false</DCC_F>
+			<DCC_K>false</DCC_K>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+			<DCC_DebugInformation>false</DCC_DebugInformation>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+		</PropertyGroup>
+		<ItemGroup>
+			<DelphiCompile Include="Aplikasi_Raport1.dpr">
+				<MainSource>MainSource</MainSource>
+			</DelphiCompile>
+			<DCCReference Include="U_koneksi.pas">
+				<Form>f_koneksi</Form>
+			</DCCReference>
+			<DCCReference Include="U_menu.pas">
+				<Form>f_menu</Form>
+			</DCCReference>
+			<DCCReference Include="U_input_siswa.pas">
+				<Form>f_input_siswa</Form>
+			</DCCReference>
+			<DCCReference Include="U_input_guru.pas">
+				<Form>F_input_guru</Form>
+			</DCCReference>
+			<DCCReference Include="U_input_kelas.pas">
+				<Form>F_input_kelas</Form>
+			</DCCReference>
+			<DCCReference Include="U_input_mapel.pas">
+				<Form>f_input_mapel</Form>
+			</DCCReference>
+			<DCCReference Include="U_input_tgsajar.pas">
+				<Form>F_input_tgsajar</Form>
+			</DCCReference>
+			<DCCReference Include="U_input_login.pas">
+				<Form>f_input_login</Form>
+			</DCCReference>
+			<DCCReference Include="U_input_kerpibadian.pas">
+				<Form>F_input_kepribadian</Form>
+			</DCCReference>
+			<DCCReference Include="U_data_akademis.pas">
+				<Form>F_data_akademis</Form>
+			</DCCReference>
+			<DCCReference Include="U_data_guru.pas">
+				<Form>F_data_guru</Form>
+			</DCCReference>
+			<DCCReference Include="U_data_kelas.pas">
+				<Form>F_data_kelas</Form>
+			</DCCReference>
+			<DCCReference Include="U_data_mapel.pas">
+				<Form>F_data_mapel</Form>
+			</DCCReference>
+			<DCCReference Include="U_data_nilai.pas">
+				<Form>F_data_nilai</Form>
+			</DCCReference>
+			<DCCReference Include="U_data_siswa.pas">
+				<Form>F_data_siswa</Form>
+			</DCCReference>
+			<DCCReference Include="U_data_tgsAjar.pas">
+				<Form>F_data_tgsAjar</Form>
+			</DCCReference>
+			<DCCReference Include="U_data_akun.pas">
+				<Form>F_data_akun</Form>
+			</DCCReference>
+			<DCCReference Include="U_data_kepribadian.pas">
+				<Form>F_data_Kepribadian</Form>
+			</DCCReference>
+			<DCCReference Include="U_DM.pas">
+				<Form>DM</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="U_input_kepribadian.pas">
+				<Form>f_input_akademis</Form>
+			</DCCReference>
+			<DCCReference Include="U_input_nilai.pas">
+				<Form>F_input_nilai</Form>
+			</DCCReference>
+			<DCCReference Include="U_login.pas">
+				<Form>F_login</Form>
+			</DCCReference>
+			<DCCReference Include="U_Laporan_nilia.pas">
+				<Form>F_laporan_nilai</Form>
+			</DCCReference>
+			<DCCReference Include="U_laporan_nilai_kelas.pas">
+				<Form>F_Laporan_nilai_kelas</Form>
+			</DCCReference>
+			<DCCReference Include="U_laporan_nilai_siswa.pas">
+				<Form>F_laporan_nilai_siswa</Form>
+			</DCCReference>
+			<DCCReference Include="U_laporan_tgs_g.pas">
+				<Form>F_laporan_tgs_g</Form>
+			</DCCReference>
+			<DCCReference Include="U__laporan_tgs_ajar.pas">
+				<Form>F_laporan_tgs_ajar</Form>
+			</DCCReference>
+			<DCCReference Include="U_laporan_tgs_K.pas">
+				<Form>F_laporan_tgs_K</Form>
+			</DCCReference>
+			<DCCReference Include="U_laporan_siswa.pas">
+				<Form>F_laporan_siswa</Form>
+			</DCCReference>
+			<DCCReference Include="U_laporan_siswa_k.pas">
+				<Form>F_laporan_siswa_k</Form>
+			</DCCReference>
+			<DCCReference Include="U_laporan_kelas.pas">
+				<Form>F_laporan_akademis</Form>
+			</DCCReference>
+			<DCCReference Include="U_laporan_akademis_k.pas">
+				<Form>F_laporan_akademis_k</Form>
+			</DCCReference>
+			<DCCReference Include="Ulaporan_akademis_s.pas">
+				<Form>F_laporan_akademis_s</Form>
+			</DCCReference>
+			<DCCReference Include="U_sd.pas">
+				<Form>F_sd</Form>
+			</DCCReference>
+			<DCCReference Include="U_laporan_guru.pas">
+				<Form>F_laporan_guru</Form>
+			</DCCReference>
+			<BuildConfiguration Include="Base">
+				<Key>Base</Key>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Debug">
+				<Key>Cfg_2</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Release">
+				<Key>Cfg_1</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+		</ItemGroup>
+		<Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Delphi.Personality>
+					<Source>
+						<Source Name="MainSource">Aplikasi_Raport1.dpr</Source>
+					</Source>
+					<Parameters>
+						<Parameters Name="UseLauncher">False</Parameters>
+						<Parameters Name="LoadAllSymbols">True</Parameters>
+						<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+					</Parameters>
+					<VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">False</VersionInfo>
+						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
+						<VersionInfo Name="MajorVer">1</VersionInfo>
+						<VersionInfo Name="MinorVer">0</VersionInfo>
+						<VersionInfo Name="Release">0</VersionInfo>
+						<VersionInfo Name="Build">0</VersionInfo>
+						<VersionInfo Name="Debug">False</VersionInfo>
+						<VersionInfo Name="PreRelease">False</VersionInfo>
+						<VersionInfo Name="Special">False</VersionInfo>
+						<VersionInfo Name="Private">False</VersionInfo>
+						<VersionInfo Name="DLL">False</VersionInfo>
+						<VersionInfo Name="Locale">1057</VersionInfo>
+						<VersionInfo Name="CodePage">1252</VersionInfo>
+					</VersionInfo>
+					<VersionInfoKeys>
+						<VersionInfoKeys Name="CompanyName"/>
+						<VersionInfoKeys Name="FileDescription"/>
+						<VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="InternalName"/>
+						<VersionInfoKeys Name="LegalCopyright"/>
+						<VersionInfoKeys Name="LegalTrademarks"/>
+						<VersionInfoKeys Name="OriginalFilename"/>
+						<VersionInfoKeys Name="ProductName"/>
+						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="Comments"/>
+					</VersionInfoKeys>
+					<Excluded_Packages>
+						<Excluded_Packages Name="$(BDS)\bin\bcboffice2k140.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
+						<Excluded_Packages Name="$(BDS)\bin\bcbofficexp140.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
+						<Excluded_Packages Name="$(BDS)\bin\dcloffice2k140.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+						<Excluded_Packages Name="$(BDS)\bin\dclofficexp140.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+					</Excluded_Packages>
+				</Delphi.Personality>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+	</Project>

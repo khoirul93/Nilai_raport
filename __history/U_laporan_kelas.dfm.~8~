@@ -1,0 +1,194 @@
+object F_laporan_akademis: TF_laporan_akademis
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  Caption = 'F_laporan_akademis'
+  ClientHeight = 431
+  ClientWidth = 427
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object sGroupBox1: TsGroupBox
+    Left = 8
+    Top = 53
+    Width = 409
+    Height = 370
+    Caption = 'KRITERIA'
+    TabOrder = 0
+    SkinData.SkinSection = 'GROUPBOX'
+    object sLabel1: TsLabel
+      Left = 22
+      Top = 37
+      Width = 25
+      Height = 13
+      Caption = 'Kelas'
+      ParentFont = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 467255
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object sLabel3: TsLabel
+      Left = 22
+      Top = 99
+      Width = 57
+      Height = 13
+      Caption = 'Nama Siswa'
+      ParentFont = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 467255
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object sGroupBox2: TsGroupBox
+      Left = 3
+      Top = 155
+      Width = 403
+      Height = 212
+      Caption = 'DATA'
+      TabOrder = 0
+      SkinData.SkinSection = 'GROUPBOX'
+      object DBGrid1: TDBGrid
+        Left = 3
+        Top = 19
+        Width = 397
+        Height = 190
+        TabOrder = 0
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'Tahoma'
+        TitleFont.Style = []
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'NO'
+            Width = 36
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'siswa_nis'
+            Title.Caption = 'NIS'
+            Width = 94
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'siswa_nama'
+            Title.Caption = 'NAMA'
+            Width = 111
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'kep_jenis'
+            Title.Caption = 'JENIS KEPRIBADIAN'
+            Width = 119
+            Visible = True
+          end>
+      end
+    end
+    object cb_kelas: TsComboBox
+      Left = 120
+      Top = 34
+      Width = 145
+      Height = 22
+      Alignment = taLeftJustify
+      BoundLabel.Indent = 0
+      BoundLabel.Font.Charset = DEFAULT_CHARSET
+      BoundLabel.Font.Color = clWindowText
+      BoundLabel.Font.Height = -11
+      BoundLabel.Font.Name = 'Tahoma'
+      BoundLabel.Font.Style = []
+      BoundLabel.Layout = sclLeft
+      BoundLabel.MaxWidth = 0
+      BoundLabel.UseSkinColor = True
+      SkinData.SkinSection = 'COMBOBOX'
+      Color = 8500947
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ItemIndex = -1
+      ParentFont = False
+      TabOrder = 1
+      Text = 'cb_kelas'
+      OnClick = cb_kelasClick
+    end
+    object btn_kelas: TsBitBtn
+      Left = 288
+      Top = 24
+      Width = 75
+      Height = 41
+      Hint = 'klik Untuk Lihat Laporan Akademis !!'
+      Caption = 'btn_kelas'
+      DoubleBuffered = True
+      ParentDoubleBuffered = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 2
+      OnClick = btn_kelasClick
+      SkinData.SkinSection = 'BUTTON'
+    end
+    object btn_nama: TsBitBtn
+      Left = 296
+      Top = 87
+      Width = 75
+      Height = 39
+      Hint = 'klik Untuk Lihat Laporan Nilai Siswa !!'
+      Caption = 'btn_nama'
+      DoubleBuffered = True
+      ParentDoubleBuffered = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 3
+      SkinData.SkinSection = 'BUTTON'
+    end
+    object edit_nama: TsEdit
+      Left = 120
+      Top = 96
+      Width = 145
+      Height = 21
+      Color = 8500947
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 4
+      Text = 'edit_nama'
+      SkinData.SkinSection = 'EDIT'
+      BoundLabel.Indent = 0
+      BoundLabel.Font.Charset = DEFAULT_CHARSET
+      BoundLabel.Font.Color = clWindowText
+      BoundLabel.Font.Height = -11
+      BoundLabel.Font.Name = 'Tahoma'
+      BoundLabel.Font.Style = []
+      BoundLabel.Layout = sclLeft
+      BoundLabel.MaxWidth = 0
+      BoundLabel.UseSkinColor = True
+    end
+  end
+  object sPanel1: TsPanel
+    Left = 8
+    Top = 6
+    Width = 406
+    Height = 41
+    Caption = 'LAPORAN AKADEMIS'
+    TabOrder = 1
+    SkinData.SkinSection = 'PANEL'
+  end
+end

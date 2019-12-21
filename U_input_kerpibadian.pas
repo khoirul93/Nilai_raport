@@ -1,0 +1,212 @@
+unit U_input_kerpibadian;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, sGroupBox, ExtCtrls, sPanel, sLabel, sMemo, sEdit, Buttons,
+  sBitBtn;
+
+type
+  TF_input_kepribadian = class(TForm)
+    sPanel1: TsPanel;
+    sGroupBox1: TsGroupBox;
+    edit_jenis: TsEdit;
+    edit_kepribadian: TsMemo;
+    sLabel1: TsLabel;
+    sLabel2: TsLabel;
+    sGroupBox2: TsGroupBox;
+    btn_edit: TsBitBtn;
+    btn_simpan: TsBitBtn;
+    edit_kd: TsEdit;
+    sLabel3: TsLabel;
+    procedure FormShow(Sender: TObject);
+    procedure btn_simpanClick(Sender: TObject);
+    procedure btn_editClick(Sender: TObject);
+    procedure edit_jenisKeyPress(Sender: TObject; var Key: Char);
+    procedure edit_kepribadianKeyPress(Sender: TObject; var Key: Char);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure bersih;
+    procedure simpankeb;
+  end;
+
+var
+  F_input_kepribadian: TF_input_kepribadian;
+
+implementation
+
+uses U_input_guru, U_DM, U_data_kepribadian;
+
+{$R *.dfm}
+function SetCueBanner(const Edit: TEdit; const Placeholder: String): Boolean;
+const
+  EM_SETCUEBANNER = $1501;
+var
+  UniStr: WideString;
+begin
+  UniStr := Placeholder;
+  SendMessage(Edit.Handle, EM_SETCUEBANNER, WParam(True),LParam(UniStr));
+  Result := GetLastError() = ERROR_SUCCESS;
+end;
+
+
+
+procedure TF_input_kepribadian.bersih;
+begin
+edit_kd.Clear;
+edit_jenis.Clear;
+SetCueBanner(edit_jenis,'Masukkan jenis Kepribadian');
+//edit_kd.SetFocus;
+edit_kepribadian.Clear;
+//SetCueBanner1(edit_kepribadian,'Masukkan Keterangan Kepribadian');
+
+end;
+procedure TF_input_kepribadian.simpankeb;
+begin
+  with DM.q_kepribadian do
+  begin
+    Active:=False;
+    SQL.Text:='select * from kepribadian';
+    Active:=True;
+  end;
+  try
+  DM.koneksi.BeginTrans;
+  with DM.q_kepribadian do
+  begin
+    Active:=True;
+    Close;
+    SQL.Clear;
+    SQL.Add('insert into Kepribadian values('+QuotedStr(edit_kd.Text)+','+QuotedStr(edit_jenis.Text)+','+QuotedStr(edit_kepribadian.Text)+')');
+    ExecSQL;
+  end;
+  DM.koneksi.CommitTrans;
+  ShowMessage('Data Kepribadian Disimpan');
+
+
+  except
+  DM.koneksi.RollbackTrans;
+  ShowMessage('Data Kepribadian Gagal di Simpan');
+  end;
+
+
+end;
+
+procedure TF_input_kepribadian.btn_editClick(Sender: TObject);
+begin
+ if edit_kd.Text='' then
+begin
+Application.MessageBox('Data Kode Keibadian Masih Kosong','Waning',MB_OK+MB_ICONWARNING);
+edit_kd.SetFocus;
+end
+else if edit_jenis.Text='' then
+     begin
+        Application.MessageBox('Data Jenis Kepribadian Masih Kosong','Warning',MB_OK+MB_ICONWARNING);
+        edit_jenis.SetFocus;
+     end
+     else if edit_kepribadian.Text='' then
+          begin
+             Application.MessageBox('Data Keterangan Kepribadian Kosong','Warning',MB_OK+MB_ICONWARNING);
+             edit_kepribadian.SetFocus;
+          end
+          else
+begin
+  begin
+  with DM.q_kepribadian do
+  begin
+    Active:=False;
+    SQL.Text:='select * from kepribadian';
+    Active:=True;
+  end;
+  try
+  DM.koneksi.BeginTrans;
+  with DM.q_kepribadian do
+  begin
+    Active:=True;
+    Close;
+    SQL.Clear;
+    SQL.Text:='update kepribadian set kep_jenis='+QuotedStr(edit_jenis.Text)+',kep_ket='+QuotedStr(edit_kepribadian.Text)+'where kep_kd='+QuotedStr(edit_kd.Text);
+    ExecSQL;
+  end;
+  DM.koneksi.CommitTrans;
+  ShowMessage('Data Kepribadian Berhasil di Rubah');
+  except
+  DM.koneksi.RollbackTrans;
+  ShowMessage('Data Kepribadian Gagal di Rubah');
+  end;
+  F_data_Kepribadian.tampil;
+  F_input_kepribadian.Close;
+  end;
+end;
+end;
+
+procedure TF_input_kepribadian.btn_simpanClick(Sender: TObject);
+begin
+if edit_kd.Text='' then
+begin
+Application.MessageBox('Data Kode Keibadian Masih Kosong','Waning',MB_OK+MB_ICONWARNING);
+edit_kd.SetFocus;
+end
+else if edit_jenis.Text='' then
+     begin
+        Application.MessageBox('Data Jenis Kepribadian Masih Kosong','Warning',MB_OK+MB_ICONWARNING);
+        edit_jenis.SetFocus;
+     end
+     else if edit_kepribadian.Text='' then
+          begin
+             Application.MessageBox('Data Keterangan Kepribadian Kosong','Warning',MB_OK+MB_ICONWARNING);
+             edit_kepribadian.SetFocus;
+          end
+          else
+          begin
+with DM.q_kepribadian do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select * from kepribadian where kep_kd='+QuotedStr(edit_kd.Text);
+  Active:=True;
+end;
+if DM.q_kepribadian.IsEmpty then
+begin
+ simpankeb;
+end
+else
+ShowMessage('Data Kode Kepribadian Sudah Ada');
+  F_data_Kepribadian.tampil;
+  F_input_kepribadian.Close;
+end;
+
+
+
+end;
+
+procedure TF_input_kepribadian.edit_jenisKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if not (key in['a'..'z','A'..'Z',#8,#13,#32]) then
+begin
+  Key:=#0;
+  ShowMessage('Inputan Jenis Kepribadian Hanya Huruf');
+end;
+end;
+
+procedure TF_input_kepribadian.edit_kepribadianKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if not (key in['a'..'z','A'..'Z',#8,#13,#32]) then
+begin
+  Key:=#0;
+  ShowMessage('Inputan Keterangan Kepribadian Hanya Huruf');
+end;
+end;
+
+procedure TF_input_kepribadian.FormShow(Sender: TObject);
+begin
+
+bersih;
+end;
+
+end.

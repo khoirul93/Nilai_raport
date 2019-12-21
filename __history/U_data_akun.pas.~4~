@@ -1,0 +1,90 @@
+unit U_data_akun;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, StdCtrls, Buttons, sBitBtn, sEdit, sComboBox,
+  sGroupBox, sLabel;
+
+type
+  TF_data_akun = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sLabel3: TsLabel;
+    sGroupBox2: TsGroupBox;
+    sLabel1: TsLabel;
+    sLabel2: TsLabel;
+    cb_kategori: TsComboBox;
+    Edit_key: TsEdit;
+    sGroupBox3: TsGroupBox;
+    btn_ubah: TsBitBtn;
+    btn_tambah: TsBitBtn;
+    btn_hapus: TsBitBtn;
+    DBGrid1: TDBGrid;
+    procedure FormShow(Sender: TObject);
+    procedure btn_hapusClick(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+     procedure tampil;
+  end;
+
+var
+  F_data_akun: TF_data_akun;
+
+implementation
+
+uses U_DM;
+
+{$R *.dfm}
+procedure TF_data_akun.btn_hapusClick(Sender: TObject);
+begin
+if (Application.MessageBox('Yakin Hapus Data Akun ini ?','KONFIRM',MB_YESNO+MB_ICONQUESTION)=ID_YES) then
+try
+  DM.koneksi.BeginTrans;
+  with DM.q_login do
+  begin
+    Connection:=DM.koneksi;
+    SQL.Text:='delete from login where login_kd='+QuotedStr(sLabel3.Caption);
+    ExecSQL;
+  end;
+  DM.koneksi.CommitTrans;
+  ShowMessage('Data Akun Terhapus');
+except
+  DM.koneksi.RollbackTrans;
+  ShowMessage('Data Akun Gagal Terhapus');
+end;
+tampil;
+end;
+
+procedure TF_data_akun.DBGrid1CellClick(Column: TColumn);
+begin
+with DM.q_login do
+begin
+  sLabel3.Caption:=DM.q_login.FieldByName('login_kd').AsString;
+end;
+end;
+
+procedure TF_data_akun.FormShow(Sender: TObject);
+begin
+  tampil;
+end;
+
+procedure TF_data_akun.tampil;
+begin
+with DM.q_login do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select ROW_NUMBER() over (order by login_kd ) as NO, login.login_kd,login.guru_nip, guru.guru_nama, login.login_user, login.jabatan from login, guru where login.guru_nip=guru.guru_nip';
+  Active:=True;
+  DBGrid1.DataSource:=DM.ds_login;
+  DM.ds_login.DataSet:=DM.q_login;
+end;
+
+end;
+
+end.

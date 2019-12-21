@@ -1,0 +1,65 @@
+unit U_data_tgsAjar;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, StdCtrls, Buttons, sBitBtn, sEdit, sComboBox,
+  sGroupBox, sLabel;
+
+type
+  TF_data_tgsAjar = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sLabel3: TsLabel;
+    sGroupBox2: TsGroupBox;
+    sLabel1: TsLabel;
+    sLabel2: TsLabel;
+    cb_kategori: TsComboBox;
+    Edit_key: TsEdit;
+    DBGrid1: TDBGrid;
+    sGroupBox3: TsGroupBox;
+    btn_ubah: TsBitBtn;
+    btn_tambah: TsBitBtn;
+    btn_hapus: TsBitBtn;
+    procedure btn_tambahClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure tampil;
+  end;
+
+var
+  F_data_tgsAjar: TF_data_tgsAjar;
+
+implementation
+
+uses U_input_tgsajar, U_DM;
+
+{$R *.dfm}
+procedure TF_data_tgsAjar.tampil;
+begin
+with DM.q_tugasmengajar do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select ROW_NUMBER() over (order by tm_kd ) as NO, * from tugasmengajar';
+  Active:=True;
+  DBGrid1.DataSource:=DM.ds_tugasmengajar;
+  DM.ds_tugasmengajar.DataSet:=DM.q_tugasmengajar;
+end;
+
+end;
+
+
+procedure TF_data_tgsAjar.btn_tambahClick(Sender: TObject);
+begin
+F_input_tgsajar.Show;
+F_input_tgsajar.btn_simpan.Enabled:=True;
+F_input_tgsajar.btn_edit.Enabled:=False;
+F_input_tgsajar.edit_kdtgsajr.Enabled:=True;
+F_input_tgsajar.edit_kdtgsajr.SetFocus;
+end;
+
+end.

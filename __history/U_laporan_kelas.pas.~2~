@@ -1,0 +1,62 @@
+unit U_laporan_kelas;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, sPanel, StdCtrls, Buttons, sBitBtn, sComboBox, Grids,
+  DBGrids, sLabel, sGroupBox;
+
+type
+  TF_laporan_kelas = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sLabel1: TsLabel;
+    sGroupBox2: TsGroupBox;
+    cb_kelas: TsComboBox;
+    btn_kelas: TsBitBtn;
+    sPanel1: TsPanel;
+    DBGrid1: TDBGrid;
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  F_laporan_kelas: TF_laporan_kelas;
+
+implementation
+
+uses U_DM;
+
+{$R *.dfm}
+
+procedure TF_laporan_kelas.FormShow(Sender: TObject);
+begin
+DM.q_kelas.Active:=False;
+DM.q_kelas.SQL.Clear;
+DM.q_kelas.SQL.Add('select * from kelas');
+DM.q_kelas.Active:=True;
+cb_kelas.Items.Clear;
+while not DM.q_kelas.Eof do
+begin
+  cb_kelas.Items.Add(DM.q_kelas.FieldByName('kelas_nama').AsString);
+  DM.q_kelas.Next;
+end;
+cb_kelas.Text:='--Pilih--';
+
+
+with DM.q_kelas do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select ROW_NUMBER() over (order by siswa_nis ) as NO,siswa.siswa_nis,kelas.kelas_kd, siswa.siswa_nama, kelas.kelas_nama, kelas.guru_nip,guru.guru_nama from guru, kelas, siswa where kelas.guru_nip=guru.guru_nip and siswa.kelas_kd=kelas.kelas_kd';
+  Active:=True;
+end;
+DBGrid1.DataSource:=DM.ds_kelas;
+
+end;
+
+end.

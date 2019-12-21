@@ -1,0 +1,99 @@
+object DM: TDM
+  OldCreateOrder = False
+  Height = 448
+  Width = 733
+  object koneksi: TADOConnection
+    LoginPrompt = False
+    Left = 264
+    Top = 88
+  end
+  object ds_absen: TDataSource
+    Left = 128
+    Top = 136
+  end
+  object ds_akadeis: TDataSource
+    Left = 200
+    Top = 144
+  end
+  object ds_guru: TDataSource
+    Left = 312
+    Top = 152
+  end
+  object ds_kelas: TDataSource
+    Left = 376
+    Top = 152
+  end
+  object ds_login: TDataSource
+    Left = 432
+    Top = 152
+  end
+  object ds_mapel: TDataSource
+    Left = 480
+    Top = 152
+  end
+  object ds_nilai: TDataSource
+    Left = 544
+    Top = 152
+  end
+  object ds_siswa: TDataSource
+    Left = 584
+    Top = 160
+  end
+  object ds_tugasmengajar: TDataSource
+    Left = 656
+    Top = 160
+  end
+  object q_absen: TADOQuery
+    Parameters = <>
+    Left = 8
+    Top = 16
+  end
+  object q_akademis: TADOQuery
+    Parameters = <>
+    Left = 56
+    Top = 16
+  end
+  object q_guru: TADOQuery
+    Parameters = <>
+    Left = 160
+    Top = 24
+  end
+  object q_kelas: TADOQuery
+    Parameters = <>
+    Left = 208
+    Top = 24
+  end
+  object q_login: TADOQuery
+    Parameters = <>
+    Left = 256
+    Top = 32
+  end
+  object q_mapel: TADOQuery
+    Parameters = <>
+    Left = 296
+    Top = 32
+  end
+  object q_nilai: TADOQuery
+    Parameters = <>
+    Left = 400
+    Top = 32
+  end
+  object q_siswa: TADOQuery
+    Parameters = <>
+    Left = 480
+    Top = 32
+  end
+  object q_tugasmengajar: TADOQuery
+    Parameters = <>
+    Left = 576
+    Top = 16
+  end
+  object Q_kepribadian: TQuery
+    Left = 104
+    Top = 40
+  end
+  object ds_kepribadian: TDataSource
+    Left = 248
+    Top = 152
+  end
+end

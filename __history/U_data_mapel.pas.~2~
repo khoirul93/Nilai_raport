@@ -1,0 +1,40 @@
+unit U_data_mapel;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, StdCtrls, Buttons, sBitBtn, sEdit, sComboBox,
+  sGroupBox;
+
+type
+  TF_data_mapel = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sGroupBox2: TsGroupBox;
+    cb_kategori: TsComboBox;
+    sGroupBox3: TsGroupBox;
+    edit_cari: TsEdit;
+    btn_cari: TsBitBtn;
+    btn_pilih: TsBitBtn;
+    btn_ubah: TsBitBtn;
+    btn_tambah: TsBitBtn;
+    btn_hapus: TsBitBtn;
+    btn_kembali: TsBitBtn;
+    sGroupBox4: TsGroupBox;
+    btn_tampil: TsBitBtn;
+    btn_sembuyi: TsBitBtn;
+    DBGrid1: TDBGrid;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  F_data_mapel: TF_data_mapel;
+
+implementation
+
+{$R *.dfm}
+
+end.

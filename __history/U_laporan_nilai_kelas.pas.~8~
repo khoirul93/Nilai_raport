@@ -1,0 +1,61 @@
+unit U_laporan_nilai_kelas;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, QRCtrls, jpeg, QuickRpt, ExtCtrls;
+
+type
+  TF_Laporan_nilai_kelas = class(TForm)
+    QuickRep1: TQuickRep;
+    QRBand1: TQRBand;
+    QRImage1: TQRImage;
+    QRLabel1: TQRLabel;
+    QRLabel2: TQRLabel;
+    QRLabel3: TQRLabel;
+    QRLabel4: TQRLabel;
+    QRLkelasJ: TQRLabel;
+    QRLabel5: TQRLabel;
+    QRLNIP: TQRLabel;
+    QRLabel6: TQRLabel;
+    QRLabel8: TQRLabel;
+    QRLNAMAGURU: TQRLabel;
+    QRBand2: TQRBand;
+    QRShape1: TQRShape;
+    QRBand3: TQRBand;
+    QRShape2: TQRShape;
+    QRSysData1: TQRSysData;
+    QRLabel9: TQRLabel;
+    teksnis: TQRDBText;
+    QRLabel10: TQRLabel;
+    QRLabel11: TQRLabel;
+    QRLabel12: TQRLabel;
+    QRLabel13: TQRLabel;
+    QRLabel14: TQRLabel;
+    QRLabel15: TQRLabel;
+    QRLabel16: TQRLabel;
+    QRLabel17: TQRLabel;
+    QRLabel18: TQRLabel;
+    teksnama: TQRDBText;
+    teksmapel: TQRDBText;
+    teksulangan: TQRDBText;
+    tekstugas: TQRDBText;
+    teksUTS: TQRDBText;
+    teksUAS: TQRDBText;
+    teksTotal: TQRDBText;
+    teksKET: TQRDBText;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  F_Laporan_nilai_kelas: TF_Laporan_nilai_kelas;
+
+implementation
+
+{$R *.dfm}
+
+end.

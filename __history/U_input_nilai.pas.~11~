@@ -1,0 +1,370 @@
+unit U_input_nilai;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, sMemo, Buttons, sBitBtn, sComboBox, sEdit, sLabel,
+  ExtCtrls, sPanel, sGroupBox;
+
+type
+  TF_input_nilai = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sPanel1: TsPanel;
+    sLabel1: TsLabel;
+    edit_Kd: TsEdit;
+    sLabel2: TsLabel;
+    cb_tahunajrn: TsComboBox;
+    cb_nis: TsComboBox;
+    sLabel3: TsLabel;
+    edit_nama_siswa: TsEdit;
+    sLabel4: TsLabel;
+    cb_mapel: TsComboBox;
+    sLabel5: TsLabel;
+    sLabel6: TsLabel;
+    edit_nama_mapel: TsEdit;
+    sLabel7: TsLabel;
+    edit_ulangan: TsEdit;
+    edit_tugas: TsEdit;
+    sLabel8: TsLabel;
+    sLabel9: TsLabel;
+    edit_uts: TsEdit;
+    sLabel10: TsLabel;
+    edit_uas: TsEdit;
+    btn_proses: TsBitBtn;
+    edit_total: TsEdit;
+    sLabel11: TsLabel;
+    edit_ket: TsMemo;
+    sLabel12: TsLabel;
+    sGroupBox2: TsGroupBox;
+    btn_edit: TsBitBtn;
+    btn_simpan: TsBitBtn;
+    cb_semster_mapel: TsComboBox;
+    cb_kelas_siswa: TsComboBox;
+    sLabel13: TsLabel;
+    sLabel14: TsLabel;
+    procedure cb_semster_mapelChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure cb_kelas_siswaChange(Sender: TObject);
+    procedure cb_nisChange(Sender: TObject);
+    procedure cb_mapelChange(Sender: TObject);
+    procedure btn_prosesClick(Sender: TObject);
+    procedure btn_simpanClick(Sender: TObject);
+    procedure btn_editClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure bersih;
+    procedure simpannil;
+  end;
+
+var
+  F_input_nilai: TF_input_nilai;
+
+implementation
+
+uses U_DM, U_data_nilai;
+
+{$R *.dfm}
+procedure TF_input_nilai.simpannil;
+begin
+with DM.q_nilai do
+begin
+  Active:=False;
+  SQL.Clear;
+  SQL.Text:='select * from nilai';
+  Active:=True;
+  try
+    DM.koneksi.BeginTrans;
+    with DM.q_nilai do
+    begin
+      Active:=False;
+      Close;
+      SQL.Clear;
+      SQL.Add('insert into nilai values('+QuotedStr(edit_Kd.Text)+','+QuotedStr(cb_tahunajrn.Text)+','+QuotedStr(cb_nis.Text)+','+QuotedStr(cb_mapel.Text)+','+QuotedStr(edit_ulangan.Text)+','+QuotedStr(edit_tugas.Text)+','+QuotedStr(edit_uts.Text)+','+QuotedStr(edit_uas.Text)+','+QuotedStr(edit_total.Text)+','+QuotedStr(edit_ket.Text)+')');
+ //     SQL.Add('insert into nilai values ('+QuotedStr(edit_Kd.Text)+','+QuotedStr(cb_tahunajrn.Text+','+QuotedStr(cb_nis.Text)+','+QuotedStr(cb_mapel.Text)+','+QuotedStr(edit_ulangan.Text)+','+QuotedStr(edit_tugas.Text)+','+QuotedStr(edit_uts.Text)+','+QuotedStr(edit_uas.Text)+','+QuotedStr(edit_total.Text)+','+QuotedStr(edit_ket.Text)+')');
+      ExecSQL;
+    end;
+    DM.koneksi.CommitTrans;
+    ShowMessage('Data Nilai Tersimpan');
+  except
+  DM.koneksi.RollbackTrans;
+  ShowMessage('Data Nilai Gagal Tersimpan');
+
+  end;
+
+end;
+end;
+procedure TF_input_nilai.bersih;
+begin
+edit_Kd.Clear;
+cb_tahunajrn.Text:='--Pilih--';
+cb_nis.Text:='--Pilih--';
+edit_nama_siswa.Clear;
+edit_nama_siswa.Enabled:=False;
+cb_mapel.Text:='--Pilih--';
+cb_semster_mapel.Text:='--Pilih--';
+cb_kelas_siswa.Text:='--Pilih--';
+edit_nama_mapel.Clear;
+edit_nama_mapel.Enabled:=False;
+edit_ulangan.Clear;
+edit_uts.Clear;
+edit_uas.Clear;
+edit_total.Clear;
+edit_total.Enabled:=False;
+edit_ket.Clear;
+edit_tugas.Clear;
+edit_ket.Enabled:=False ;
+
+
+
+end;
+
+procedure TF_input_nilai.btn_editClick(Sender: TObject);
+begin
+if edit_Kd.Text='' then
+begin
+  Application.MessageBox('Data Kode Nilai Masih Kosong','Warning',MB_OK+MB_ICONWARNING);
+  edit_Kd.SetFocus;
+end
+else if cb_tahunajrn.Text='--Pilih--' then
+     begin
+       Application.MessageBox('Pilih Dahulu Tahun Ajaran','Warning',MB_OK+MB_ICONWARNING);
+       cb_tahunajrn.SetFocus;
+     end
+     else if cb_semster_mapel.Text='--Pilih--' then
+          begin
+            Application.MessageBox('Pilih Dahulu Untuk Semester','Warning',MB_OK+MB_ICONWARNING);
+            cb_semster_mapel.SetFocus;
+          end
+          else if cb_kelas_siswa.Text='--Pilih--' then
+               begin
+                 Application.MessageBox('Pilih Dahulu Kelas','Warning',MB_OK+MB_ICONWARNING);
+                 cb_kelas_siswa.SetFocus;
+               end
+               else if cb_nis.Text='--PIlih--' then
+                    begin
+                      Application.MessageBox('Pilih Dahulu NIS Siswa','Warning',MB_OK+MB_ICONWARNING);
+                      cb_nis.SetFocus;
+                    end
+                    else if cb_mapel.Text='--Pilih--' then
+                         begin
+                           Application.MessageBox('Pilih Dahulu Mata Pelajaran','Warning',MB_OK+MB_ICONWARNING);
+                           cb_mapel.SetFocus;
+                         end
+                         else if edit_ulangan.Text='' then
+                              begin
+                                Application.MessageBox('Data Nialai Ualangan Masih Kosong','Warning',MB_OK+MB_ICONWARNING);
+                                edit_ulangan.SetFocus;
+                              end
+                              else if edit_tugas.Text='' then
+                                   begin
+                                     Application.MessageBox('Data Nilai Tugas Masih Kosong','Warning',MB_OK+MB_ICONWARNING);
+                                     edit_tugas.SetFocus;
+                                   end
+                                   else if edit_uts.Text='' then
+                                        begin
+                                          Application.MessageBox('Data Nilai UTS Masih Kosong','Warning',MB_OK+MB_ICONWARNING);
+                                          edit_uts.SetFocus;
+                                        end
+                                        else if edit_uas.Text='' then
+                                             begin
+                                               Application.MessageBox('Data UAS Masih Kosong','Warning',MB_OK+MB_ICONWARNING);
+                                               edit_uas.SetFocus
+                                             end
+                                             else
+begin
+  with DM.q_nilai do
+  begin
+    Active:=False;
+    SQL.Text:='select * from Nilai';
+    Active:=True;
+  end;
+  try
+    DM.koneksi.BeginTrans;
+    with DM.q_nilai do
+    begin
+      Active:=False;
+      Close;
+      SQL.Clear;
+      SQL.Text:='update nilai set tahun='+QuotedStr(cb_tahunajrn.Text)+',siswa_nis='+QuotedStr(cb_nis.Text)+',mapel_kd='+QuotedStr(cb_mapel.Text)+',nilai_ulangan='+QuotedStr(edit_ulangan.Text)+',nilai_tugas='+QuotedStr(edit_tugas.Text)+',nilai_uts='+QuotedStr(edit_uts.Text)+',nilai_uas='+QuotedStr(edit_uas.Text)+',nilai_total='+QuotedStr(edit_total.Text)+',nilai_keterangan='+QuotedStr(edit_ket.Text)+'where nilai_kd='+QuotedStr(edit_Kd.Text);
+      ExecSQL;
+    end;
+    DM.koneksi.CommitTrans;
+    ShowMessage('Data Nilai Berhasil di Rubah');
+  except
+  DM.koneksi.RollbackTrans;
+  ShowMessage('Data Nilai Gagal di Rubah ');
+
+  end;
+  F_data_nilai.tampil;
+  F_input_nilai.Close;
+end;
+end;
+
+procedure TF_input_nilai.btn_prosesClick(Sender: TObject);
+var ulangan,tugas,uts,uas,hasil:real;
+ket:string;
+begin
+
+ulangan:=StrToFloat(edit_ulangan.Text);
+tugas:=StrToFloat(edit_tugas.Text);
+uts:=StrToFloat(edit_uts.Text);
+uas:=StrToFloat(edit_uas.Text);
+hasil:=(ulangan+tugas+uts+uas)/4;
+edit_total.Text:=FloatToStr(hasil);
+if (hasil>=75) then
+begin
+  ket:='TUNTAS';
+end
+else if (hasil<75) then
+     begin
+       ket:='TIDAK TUNTAS';
+     end;
+edit_ket.Text:=ket;
+end;
+
+procedure TF_input_nilai.btn_simpanClick(Sender: TObject);
+begin
+if edit_Kd.Text='' then
+begin
+  Application.MessageBox('Data Kode Nilai Masih Kosong','Warning',MB_OK+MB_ICONWARNING);
+  edit_Kd.SetFocus;
+end
+else if cb_tahunajrn.Text='--Pilih--' then
+     begin
+       Application.MessageBox('Pilih Dahulu Tahun Ajaran','Warning',MB_OK+MB_ICONWARNING);
+       cb_tahunajrn.SetFocus;
+     end
+     else if cb_semster_mapel.Text='--Pilih--' then
+          begin
+            Application.MessageBox('Pilih Dahulu Untuk Semester','Warning',MB_OK+MB_ICONWARNING);
+            cb_semster_mapel.SetFocus;
+          end
+          else if cb_kelas_siswa.Text='--Pilih--' then
+               begin
+                 Application.MessageBox('Pilih Dahulu Kelas','Warning',MB_OK+MB_ICONWARNING);
+                 cb_kelas_siswa.SetFocus;
+               end
+               else if cb_nis.Text='--PIlih--' then
+                    begin
+                      Application.MessageBox('Pilih Dahulu NIS Siswa','Warning',MB_OK+MB_ICONWARNING);
+                      cb_nis.SetFocus;
+                    end
+                    else if cb_mapel.Text='--Pilih--' then
+                         begin
+                           Application.MessageBox('Pilih Dahulu Mata Pelajaran','Warning',MB_OK+MB_ICONWARNING);
+                           cb_mapel.SetFocus;
+                         end
+                         else if edit_ulangan.Text='' then
+                              begin
+                                Application.MessageBox('Data Nialai Ualangan Masih Kosong','Warning',MB_OK+MB_ICONWARNING);
+                                edit_ulangan.SetFocus;
+                              end
+                              else if edit_tugas.Text='' then
+                                   begin
+                                     Application.MessageBox('Data Nilai Tugas Masih Kosong','Warning',MB_OK+MB_ICONWARNING);
+                                     edit_tugas.SetFocus;
+                                   end
+                                   else if edit_uts.Text='' then
+                                        begin
+                                          Application.MessageBox('Data Nilai UTS Masih Kosong','Warning',MB_OK+MB_ICONWARNING);
+                                          edit_uts.SetFocus;
+                                        end
+                                        else if edit_uas.Text='' then
+                                             begin
+                                               Application.MessageBox('Data UAS Masih Kosong','Warning',MB_OK+MB_ICONWARNING);
+                                               edit_uas.SetFocus
+                                             end
+                                             else
+begin
+with DM.q_nilai do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select * from nilai where nilai_kd='+QuotedStr(edit_Kd.Text);
+  Active:=True;
+end;
+if DM.q_nilai.IsEmpty then
+begin
+  simpannil;
+end
+else
+ShowMessage('Kode Nilai Sudah di Gunakan');
+F_data_nilai.tampil;
+F_input_nilai.Close;
+end;
+end;
+
+procedure TF_input_nilai.cb_kelas_siswaChange(Sender: TObject);
+begin
+DM.q_siswa.Active:=False;
+DM.q_siswa.Close;
+DM.q_siswa.SQL.Clear;
+DM.q_siswa.SQL.Add('select * from siswa');
+DM.q_siswa.SQL.Add(' where kelas_kd like '+QuotedStr(cb_kelas_siswa.Text));
+DM.q_siswa.Active:=True;
+cb_nis.Items.Clear;
+while not DM.q_siswa.Eof do
+begin
+  cb_nis.Items.Add(DM.q_siswa.FieldByName('siswa_nis').AsString);
+  DM.q_siswa.Next;
+end;
+
+end;
+
+procedure TF_input_nilai.cb_mapelChange(Sender: TObject);
+begin
+DM.q_mapel.Active:=False;
+DM.q_mapel.SQL.Clear;
+DM.q_mapel.SQL.Add('select * from mapel');
+DM.q_mapel.SQL.Add('where mapel_kd='''+cb_mapel.Text+'''');
+DM.q_mapel.Open;
+edit_nama_mapel.Text:=DM.q_mapel.FieldByName('mapel_nama').AsString;
+end;
+
+procedure TF_input_nilai.cb_nisChange(Sender: TObject);
+begin
+DM.q_siswa.Active:=False;
+DM.q_siswa.SQL.Clear;
+DM.q_siswa.SQL.Add('select * from siswa');
+DM.q_siswa.SQL.Add('where siswa_nis='''+cb_nis.Text+'''');
+DM.q_siswa.Open;
+edit_nama_siswa.Text:=DM.q_siswa.FieldByName('siswa_nama').AsString;
+end;
+
+procedure TF_input_nilai.cb_semster_mapelChange(Sender: TObject);
+begin
+ DM.q_mapel.Active:=False;
+DM.q_mapel.SQL.Clear;
+DM.q_mapel.SQL.Add('select * from mapel ');
+DM.q_mapel.SQL.Add('where mapel_smt like '+cb_semster_mapel.Text);
+DM.q_mapel.Active:=True;
+cb_mapel.Items.Clear;
+while not DM.q_mapel.Eof do
+begin
+cb_mapel.Items.Add(DM.q_mapel.FieldByName('mapel_kd').AsString);
+DM.q_mapel.Next;
+end;
+
+end;
+
+procedure TF_input_nilai.FormShow(Sender: TObject);
+begin
+
+DM.q_kelas.Active:=False;
+DM.q_kelas.SQL.Clear;
+DM.q_kelas.SQL.Add('select * from kelas');
+DM.q_kelas.Active:=True;
+cb_kelas_siswa.Items.Clear;
+while not DM.q_kelas.Eof do
+begin
+  cb_kelas_siswa.Items.Add(DM.q_kelas.FieldByName('kelas_kd').AsString);
+  DM.q_kelas.Next;
+end;
+bersih;
+end;
+
+end.

@@ -1,0 +1,212 @@
+unit U_input_mapel;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Buttons, sBitBtn, sRadioButton, sComboBox, sLabel, sEdit,
+  sGroupBox, ExtCtrls, sPanel;
+
+type
+  Tf_input_mapel = class(TForm)
+    sPanel1: TsPanel;
+    sGroupBox1: TsGroupBox;
+    edit_kdmapel: TsEdit;
+    sLabel1: TsLabel;
+    sLabel2: TsLabel;
+    edit_mapel: TsEdit;
+    sa: TsLabel;
+    cb_mapel: TsComboBox;
+    sLabel3: TsLabel;
+    rb_pokok: TsRadioButton;
+    rb_eskul: TsRadioButton;
+    sGroupBox2: TsGroupBox;
+    btn_edit: TsBitBtn;
+    btn_simpan: TsBitBtn;
+    procedure FormShow(Sender: TObject);
+    procedure btn_simpanClick(Sender: TObject);
+    procedure btn_editClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure bersih;
+    procedure simpanmapel;
+    var status:string;
+    procedure no;
+  end;
+
+var
+  f_input_mapel: Tf_input_mapel;
+
+implementation
+
+uses U_DM, U_data_mapel;
+
+{$R *.dfm}
+procedure Tf_input_mapel.no;
+begin
+with DM.q_mapel do
+begin
+Active:=False;
+Close;
+SQL.Clear;
+SQL.Text:='select * from mapel';
+Active:=True;
+Open;
+if (DM.q_mapel.RecordCount<=0) then
+begin
+  edit_kdmapel.Text:='MP001';
+
+end
+else
+begin
+  DM.q_mapel.Close;
+  DM.q_mapel.SQL.Clear;
+  DM.q_mapel.SQL.Add('select max (RIGHT(mapel_kd,3)) as kode from mapel');
+  DM.q_mapel.Open;
+  edit_kdmapel.Text:='MP00'+IntToStr(DM.q_mapel['kode']+1);
+end
+
+end;
+
+end;
+procedure Tf_input_mapel.bersih;
+begin
+
+edit_kdmapel.Clear;
+edit_kdmapel.SetFocus;
+edit_mapel.Clear;
+cb_mapel.Text:='--Pilih--';
+
+end;
+procedure Tf_input_mapel.simpanmapel;
+begin
+with DM.q_mapel do
+begin
+Active:=False;
+SQL.Text:='select * from mapel';
+Active:=True;
+end;
+try
+  DM.koneksi.BeginTrans;
+  with DM.q_mapel do
+  begin
+    Active:=True;
+    Close;
+    SQL.Clear;
+    SQL.Add('insert into mapel values('+QuotedStr(edit_kdmapel.Text)+','+QuotedStr(edit_mapel.Text)+','+QuotedStr(cb_mapel.Text)+','+QuotedStr(status)+')');
+    ExecSQL ;
+  end;
+  DM.koneksi.CommitTrans;
+  ShowMessage('Data Mata Pelajaran Tesimpan');
+except
+ DM.koneksi.RollbackTrans;
+ ShowMessage('Data Mata Pelajaran Gagal di Simpan');
+end;
+
+end;
+
+procedure Tf_input_mapel.btn_editClick(Sender: TObject);
+begin
+if (rb_pokok.Checked=True) then
+status:='Pokok'
+else if (rb_eskul.Checked=True) then
+status:='Ekstrakurikuler' ;
+
+   if edit_kdmapel.Text='' then
+   begin
+     Application.MessageBox('Data Kode Mata Pelajaran Masih Kosng','Warning',+MB_OK+MB_ICONWARNING);
+     edit_kdmapel.SetFocus;
+   end
+   else if edit_mapel.Text='' then
+        begin
+          Application.MessageBox('Nama Mata Pelajaran Masih Kosong','Warning',+MB_OK+MB_ICONWARNING);
+          edit_mapel.SetFocus;
+           end
+           else if cb_mapel.Text='--Pilih--' then
+           begin
+              Application.MessageBox('Pilih Dahulu Semeter Mata Pelajaran','Warning',+MB_OK+MB_ICONWARNING);
+              cb_mapel.SetFocus;
+           end
+else
+begin
+ with DM.q_mapel do
+ begin
+   Active:=False;
+   SQL.Text:='select * from mapel';
+   Active:=True;
+ end;
+ try
+   DM.koneksi.BeginTrans;
+   with dm.q_mapel do
+   begin
+     Active:=True;
+     Close;
+     SQL.Clear;
+     SQL.Text:='update mapel set mapel_nama='+QuotedStr(edit_mapel.Text)+',mapel_smt='+QuotedStr(cb_mapel.Text)+',mapel_status='+QuotedStr(status)+'where mapel_kd='+QuotedStr(edit_kdmapel.Text);
+     ExecSQL;
+   end;
+   DM.koneksi.CommitTrans;
+   ShowMessage('Data Mata Pelajaran Berhasil di Rubah');
+ except
+ DM.koneksi.RollbackTrans;
+ ShowMessage('Data Mata Pelajaran Gagal di Rubah');
+
+ end;
+ bersih;
+end;
+end;
+
+procedure Tf_input_mapel.btn_simpanClick(Sender: TObject);
+begin
+if (rb_pokok.Checked=True) then
+status:='Pokok'
+else if (rb_eskul.Checked=True) then
+status:='Ekstrakurikuler' ;
+
+   if edit_kdmapel.Text='' then
+   begin
+     Application.MessageBox('Data Kode Mata Pelajaran Masih Kosng','Warning',+MB_OK+MB_ICONWARNING);
+     edit_kdmapel.SetFocus;
+   end
+   else if edit_mapel.Text='' then
+        begin
+          Application.MessageBox('Nama Mata Pelajaran Masih Kosong','Warning',+MB_OK+MB_ICONWARNING);
+          edit_mapel.SetFocus;
+           end
+           else if cb_mapel.Text='--Pilih--' then
+           begin
+              Application.MessageBox('Pilih Dahulu Semeter Mata Pelajaran','Warning',+MB_OK+MB_ICONWARNING);
+              cb_mapel.SetFocus;
+           end
+else
+begin
+  with DM.q_mapel do
+  begin
+    Active:=False;
+    Close;
+    SQL.Clear;
+    SQL.Text:='select * from mapel where mapel_kd='+QuotedStr(edit_kdmapel.Text);
+    Active:=True;
+  end;
+  if DM.q_mapel.IsEmpty then
+  begin
+    simpanmapel;
+  end
+  else
+  ShowMessage('Kode Mata Pelajaran Sudah di Gunakan');
+  bersih;
+  F_data_mapel.tampil;
+end;
+
+
+end;
+
+procedure Tf_input_mapel.FormShow(Sender: TObject);
+begin
+bersih;
+
+end;
+
+end.

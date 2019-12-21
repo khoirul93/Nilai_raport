@@ -1,0 +1,255 @@
+object f_koneksi: Tf_koneksi
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  Caption = 'koneksi'
+  ClientHeight = 326
+  ClientWidth = 300
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  OnActivate = FormActivate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object sGroupBox1: TsGroupBox
+    Left = 8
+    Top = 63
+    Width = 281
+    Height = 186
+    TabOrder = 0
+    SkinData.SkinSection = 'GROUPBOX'
+    object sLabel1: TsLabel
+      Left = 21
+      Top = 67
+      Width = 45
+      Height = 13
+      Caption = 'DATABSE'
+      ParentFont = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object sLabel2: TsLabel
+      Left = 21
+      Top = 24
+      Width = 38
+      Height = 13
+      Caption = 'SERVER'
+      ParentFont = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object sLabel4: TsLabel
+      Left = 21
+      Top = 112
+      Width = 54
+      Height = 13
+      Caption = 'USERNAME'
+      ParentFont = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object sLabel5: TsLabel
+      Left = 21
+      Top = 147
+      Width = 57
+      Height = 13
+      Caption = 'PASSWORD'
+      ParentFont = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object edit_server: TsEdit
+      Left = 96
+      Top = 21
+      Width = 169
+      Height = 21
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 0
+      Text = 'edit_server'
+      SkinData.SkinSection = 'EDIT'
+      BoundLabel.Indent = 0
+      BoundLabel.Font.Charset = DEFAULT_CHARSET
+      BoundLabel.Font.Color = clWindowText
+      BoundLabel.Font.Height = -11
+      BoundLabel.Font.Name = 'Tahoma'
+      BoundLabel.Font.Style = []
+      BoundLabel.Layout = sclLeft
+      BoundLabel.MaxWidth = 0
+      BoundLabel.UseSkinColor = True
+    end
+    object edit_database: TsEdit
+      Left = 96
+      Top = 64
+      Width = 169
+      Height = 21
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+      Text = 'edit_database'
+      SkinData.SkinSection = 'EDIT'
+      BoundLabel.Indent = 0
+      BoundLabel.Font.Charset = DEFAULT_CHARSET
+      BoundLabel.Font.Color = clWindowText
+      BoundLabel.Font.Height = -11
+      BoundLabel.Font.Name = 'Tahoma'
+      BoundLabel.Font.Style = []
+      BoundLabel.Layout = sclLeft
+      BoundLabel.MaxWidth = 0
+      BoundLabel.UseSkinColor = True
+    end
+    object edit_username: TsEdit
+      Left = 96
+      Top = 104
+      Width = 169
+      Height = 21
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 2
+      Text = 'edit_username'
+      SkinData.SkinSection = 'EDIT'
+      BoundLabel.Indent = 0
+      BoundLabel.Font.Charset = DEFAULT_CHARSET
+      BoundLabel.Font.Color = clWindowText
+      BoundLabel.Font.Height = -11
+      BoundLabel.Font.Name = 'Tahoma'
+      BoundLabel.Font.Style = []
+      BoundLabel.Layout = sclLeft
+      BoundLabel.MaxWidth = 0
+      BoundLabel.UseSkinColor = True
+    end
+    object edit_password: TsEdit
+      Left = 96
+      Top = 144
+      Width = 169
+      Height = 21
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 3
+      Text = 'edit_password'
+      SkinData.SkinSection = 'EDIT'
+      BoundLabel.Indent = 0
+      BoundLabel.Font.Charset = DEFAULT_CHARSET
+      BoundLabel.Font.Color = clWindowText
+      BoundLabel.Font.Height = -11
+      BoundLabel.Font.Name = 'Tahoma'
+      BoundLabel.Font.Style = []
+      BoundLabel.Layout = sclLeft
+      BoundLabel.MaxWidth = 0
+      BoundLabel.UseSkinColor = True
+    end
+  end
+  object sPanel1: TsPanel
+    Left = 8
+    Top = 8
+    Width = 281
+    Height = 49
+    TabOrder = 1
+    SkinData.SkinSection = 'PANEL'
+    object sLabel3: TsLabel
+      Left = 96
+      Top = 18
+      Width = 83
+      Height = 13
+      Caption = 'Setting DataBase'
+      ParentFont = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+  end
+  object sGroupBox2: TsGroupBox
+    Left = 8
+    Top = 255
+    Width = 281
+    Height = 58
+    TabOrder = 2
+    SkinData.SkinSection = 'GROUPBOX'
+    object btn_set: TsBitBtn
+      Left = 96
+      Top = 22
+      Width = 89
+      Height = 25
+      Caption = 'SET'
+      DoubleBuffered = True
+      Glyph.Data = {
+        36040000424D3604000000000000360000002800000010000000100000000100
+        200000000000000400000000000000000000000000000000000000A55C0200A5
+        5C0F00A55C1D00A55C2200A55C2200A55C2200A55C2200A55C2200A55C2200A5
+        5C2200A55C2200A55C2200A55C2200A55C1D00A55C0F00A55C0200A55C0C00A5
+        5C4500A55C7504A55C8D05A55C9105A55C9105A55C9105A55C9105A55C9105A5
+        5C9105A55C9105A55C9104A55C8D01A55C7600A55C4500A55C0C00A55C1007A4
+        5B861AA256F52DAA60FF3EB36DFF4EBC7AFF5CC385FF68C98DFF6BCA90FF60C6
+        88FF53BE7EFF44B672FF32AC63FF1DA358F608A45A8800A55C1005A55C1E169F
+        52F623A65BFF38B470FF4FC184FF63CB94FF76D3A1FF82D7AAFF84D8ABFF7BD5
+        A5FF6ACE99FF55C48AFF3FB776FF29A960FF179F53F705A55C1E11A55C54159E
+        52FF21AC65FF34B979FF49C68AFF5FD09AFF93E0BCFF78DAACFF79DAADFF72D8
+        A7FF63D29DFF50C98FFF3BBD7EFF27B06AFF17A054FF0FA45B5015A65E5A14A3
+        58FF1BAE68FF2AB876FF3EC286FFC0ECD8FFFEFEFEFFA6E7CAFF63D4A2FF5DD2
+        9EFF51CD95FF42C589FF30BB7BFF20B26CFF15A55BFF15A55D5515A9625A14A7
+        5EFF17AF69FF21B774FFB2E7D0FFFEFEFEFFFEFEFEFFFEFEFEFF98E3C3FF46CD
+        93FF3CC88CFF30C182FF23B977FF19B16CFF15A860FF15A8615515AD665A15AB
+        63FF18B36FFFA9E3CAFFFEFEFEFFFEFEFEFFF5FCF9FFFEFEFEFFFEFEFEFF88DF
+        BCFF29C486FF21BF7EFF19B975FF16B36FFF15AC65FF16AD655516B06A5A1AB0
+        6BFF25BB7CFFCEF0E2FFFEFEFEFFB2EBD5FF36CC93FFD6F5E9FFFEFEFEFFFEFE
+        FEFF7CDCB7FF1BC080FF1ABC7BFF1AB977FF1AB26DFF16B06A5516B26E5A28B8
+        77FF29C083FF36C88FFF96E4C7FF2DCB91FF2ACD92FF3BD29DFFD8F6ECFFFEFE
+        FEFFFEFEFEFF82DFBCFF29C589FF29C185FF28B979FF16B46E5516B6725A3AC0
+        86FF3CCA92FF3CCE97FF3DD19CFF3DD49FFF3DD6A1FF3DD7A3FF4CDBABFFDCF8
+        EFFFFEFEFEFFFEFEFEFF8DE2C2FF3CCB93FF39C287FF16B7725516B8755A4DC8
+        94FF53D2A2FF53D6A7FF53D9ABFF53DCAFFF53DEB1FF53DFB3FF53E0B3FF61E1
+        B8FFE0F9F1FFFEFEFEFFD5F5EAFF55D4A5FF4CCA95FF16BA765516BB78585FCF
+        A0FF6CDBB1FF6CDEB6FF6CE1BAFF6CE4BDFF6CE6C0FF6CE7C2FF6CE7C2FF6CE6
+        C1FF78E7C4FFC5F4E4FF72E0BBFF6CDCB3FF5ED0A1FF16BC795416BE7C3251CD
+        9BFF88E2C2FF85E5C5FF85E8C9FF86EACCFF86ECCEFF86EED0FF86EED0FF86ED
+        CFFF86EBCDFF85E9CAFF85E6C6FF88E4C3FF51CE9CFF16BF7F300000000018C1
+        81A36FDCB4FFA1EBD3FFADF0DBFFADF1DDFFADF3DFFFADF4E1FFADF4E1FFADF3
+        E0FFADF2DEFFADF0DCFFA2ECD4FF71DDB7FF19C484A6000000000000000017C4
+        850317C98A6017CF91A017D498AA17D99EAA17DEA4AA17E1A8AA17E2A9AA17DF
+        A5AA17DBA0AA17D69AAA17D193A117CB8D6417C8880300000000}
+      ParentDoubleBuffered = False
+      TabOrder = 0
+      OnClick = btn_setClick
+      SkinData.SkinSection = 'BUTTON'
+    end
+  end
+end

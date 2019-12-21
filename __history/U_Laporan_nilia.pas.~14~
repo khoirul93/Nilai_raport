@@ -1,0 +1,235 @@
+unit U_Laporan_nilia;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, sPanel, StdCtrls, Buttons, sBitBtn, sEdit, sLabel,
+  sComboBox, Grids, DBGrids, sGroupBox;
+
+type
+  TF_laporan_nilai = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sGroupBox2: TsGroupBox;
+    DBGrid1: TDBGrid;
+    cb_kelas: TsComboBox;
+    sLabel1: TsLabel;
+    edit_nama: TsEdit;
+    sLabel3: TsLabel;
+    btn_kelas: TsBitBtn;
+    btn_nama: TsBitBtn;
+    sPanel1: TsPanel;
+    procedure FormShow(Sender: TObject);
+    procedure cb_kelasClick(Sender: TObject);
+    procedure cb_smtClick(Sender: TObject);
+    procedure edit_namaChange(Sender: TObject);
+    procedure btn_kelasClick(Sender: TObject);
+    procedure btn_namaClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure bersih;
+  end;
+
+var
+  F_laporan_nilai: TF_laporan_nilai;
+
+implementation
+
+uses U_DM, U_laporan_nilai_kelas;
+
+{$R *.dfm}
+procedure TF_laporan_nilai.bersih;
+begin
+cb_kelas.Text:='--Pilih--';
+//cb_smt.Text:='--Pilih--';
+edit_nama.Clear;
+
+with DM.q_nilai do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select ROW_NUMBER() over (order by nilai_kd) as NO, nilai.nilai_kd,nilai.tahun,mapel.mapel_smt,nilai.siswa_nis,siswa.siswa_nama,kelas.kelas_nama,mapel.mapel_kd,mapel.mapel_nama,nilai.nilai_ulangan,nilai.nilai_tugas,nilai.nilai_uts,nilai.nilai_uas,' +
+  'nilai.nilai_total,nilai.nilai_keterangan from siswa,nilai,mapel,kelas where nilai.siswa_nis=siswa.siswa_nis and nilai.mapel_kd=mapel.mapel_kd and siswa.kelas_kd=kelas.kelas_kd' ;
+  Active:=True;
+  DBGrid1.DataSource:=DM.ds_nilai;
+  DM.ds_nilai.DataSet:=DM.q_nilai;
+end;
+end;
+
+procedure TF_laporan_nilai.btn_kelasClick(Sender: TObject);
+begin
+if cb_kelas.Text='--Pilih--' then
+begin
+  Application.MessageBox('Pilih Dahulu Kriteria Laporan','WARNING',MB_OK+MB_ICONWARNING);
+  cb_kelas.SetFocus;
+end
+else
+begin
+with DM.q_nilai do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+   SQL.Text:='select ROW_NUMBER() over (order by nilai_kd) as NO,nilai.siswa_nis,siswa.siswa_nama,nilai.mapel_kd,kelas.kelas_nama,mapel.mapel_nama,nilai.nilai_ulangan,nilai.nilai_tugas,nilai.nilai_uts,nilai.nilai_uas,' +
+  'nilai.nilai_total,nilai.nilai_keterangan,kelas.guru_nip,guru.guru_nama from  mapel,nilai,siswa,kelas,guru where nilai.mapel_kd=mapel.mapel_kd and kelas.guru_nip=guru.guru_nip and nilai.siswa_nis=siswa.siswa_nis '+
+  'and siswa.kelas_kd=kelas.kelas_kd and kelas_nama like '+QuotedStr(cb_kelas.Text + '%' ) +'  order by siswa_nama ASC';
+  Active:=True;
+    if DM.q_nilai.IsEmpty then
+    begin
+      ShowMessage('DATA TIDAK DITEMUKAN!!!');
+    end
+    else
+    begin
+       Active:=False;
+  Close;
+  SQL.Clear;
+   SQL.Text:='select ROW_NUMBER() over (order by nilai_kd) as NO,nilai.siswa_nis,siswa.siswa_nama,nilai.mapel_kd,kelas.kelas_nama,mapel.mapel_nama,nilai.nilai_ulangan,nilai.nilai_tugas,nilai.nilai_uts,nilai.nilai_uas,' +
+  'nilai.nilai_total,nilai.nilai_keterangan,kelas.guru_nip,guru.guru_nama from  mapel,nilai,siswa,kelas,guru where nilai.mapel_kd=mapel.mapel_kd and kelas.guru_nip=guru.guru_nip and nilai.siswa_nis=siswa.siswa_nis '+
+  'and siswa.kelas_kd=kelas.kelas_kd and kelas_nama like '+QuotedStr(cb_kelas.Text + '%' ) +'  order by siswa_nama ASC';
+  Active:=True;
+  F_Laporan_nilai_kelas.QuickRep1.DataSet:=DM.q_nilai;
+  F_Laporan_nilai_kelas.QRLabelKELAS.Caption:=DM.q_nilai.FieldByName('kelas_nama').AsString;
+  F_Laporan_nilai_kelas.QRLlabelNAMA.Caption:=DM.q_nilai.FieldByName('guru_nama').AsString;
+  F_Laporan_nilai_kelas.QRLabelNIP.Caption:=DM.q_nilai.FieldByName('guru_nip').AsString;
+  F_Laporan_nilai_kelas.QRDBNIS.DataSet:=DM.q_nilai; F_Laporan_nilai_kelas.QRDBNIS.DataField:='siswa_nis';
+  F_Laporan_nilai_kelas.QRDBnama.DataSet:=DM.q_nilai; F_Laporan_nilai_kelas.QRDBnama.DataField:='siswa_nama';
+  F_Laporan_nilai_kelas.QRDBMAPEL.DataSet:=DM.q_nilai; F_Laporan_nilai_kelas.QRDBMAPEL.DataField:='mapel_nama';
+  F_Laporan_nilai_kelas.QRDBULANGAN.DataSet:=DM.q_nilai; F_Laporan_nilai_kelas.QRDBULANGAN.DataField:='nilai_ulangan';
+  F_Laporan_nilai_kelas.QRDBTUGAS.DataSet:=DM.q_nilai; F_Laporan_nilai_kelas.QRDBTUGAS.DataField:='nilai_tugas';
+  F_Laporan_nilai_kelas.QRDBUTS.DataSet:=DM.q_nilai; F_Laporan_nilai_kelas.QRDBUTS.DataField:='nilai_uts';
+  F_Laporan_nilai_kelas.QRDBUAS.DataSet:=DM.q_nilai; F_Laporan_nilai_kelas.QRDBUAS.DataField:='nilai_uas';
+  F_Laporan_nilai_kelas.QRDBTOTAL.DataSet:=DM.q_nilai; F_Laporan_nilai_kelas.QRDBTOTAL.DataField:='nilai_total';
+  F_Laporan_nilai_kelas.QRDBKET.DataSet:=DM.q_nilai; F_Laporan_nilai_kelas.QRDBKET.DataField:='nilai_keterangan';
+
+  F_Laporan_nilai_kelas.QuickRep1.Preview;
+    end;
+
+end;
+end;
+
+end;
+
+procedure TF_laporan_nilai.btn_namaClick(Sender: TObject);
+begin
+if cb_kelas.Text='--Pilih--' then
+begin
+  Application.MessageBox('Pilih Dahulu Kriteria Laporan','WARNING',MB_OK+MB_ICONWARNING);
+  cb_kelas.SetFocus;
+end
+else
+begin
+with DM.q_nilai do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+   SQL.Text:='select ROW_NUMBER() over (order by nilai_kd) as NO,nilai.siswa_nis,siswa.siswa_nama,nilai.mapel_kd,kelas.kelas_nama,mapel.mapel_nama,nilai.nilai_ulangan,nilai.nilai_tugas,nilai.nilai_uts,nilai.nilai_uas,' +
+  'nilai.nilai_total,nilai.nilai_keterangan,kelas.guru_nip,guru.guru_nama from  mapel,nilai,siswa,kelas,guru where nilai.mapel_kd=mapel.mapel_kd and kelas.guru_nip=guru.guru_nip and nilai.siswa_nis=siswa.siswa_nis '+
+  'and siswa.kelas_kd=kelas.kelas_kd and kelas_nama like '+QuotedStr(cb_kelas.Text + '%' ) +'  order by siswa_nama ASC';
+  Active:=True;
+    if DM.q_nilai.IsEmpty then
+    begin
+      ShowMessage('DATA TIDAK DITEMUKAN!!!');
+    end
+    else
+    begin
+       Active:=False;
+  Close;
+  SQL.Clear;
+   SQL.Text:='select ROW_NUMBER() over (order by nilai_kd) as NO,nilai.siswa_nis,siswa.siswa_nama,nilai.mapel_kd,kelas.kelas_nama,mapel.mapel_nama,nilai.nilai_ulangan,nilai.nilai_tugas,nilai.nilai_uts,nilai.nilai_uas,' +
+  'nilai.nilai_total,nilai.nilai_keterangan,kelas.guru_nip,guru.guru_nama from  mapel,nilai,siswa,kelas,guru where nilai.mapel_kd=mapel.mapel_kd and kelas.guru_nip=guru.guru_nip and nilai.siswa_nis=siswa.siswa_nis '+
+  'and siswa.kelas_kd=kelas.kelas_kd and kelas_nama like '+QuotedStr(cb_kelas.Text + '%' ) +'  order by siswa_nama ASC';
+  Active:=True;
+  F_Laporan_nilai_kelas.QuickRep1.DataSet:=DM.q_nilai;
+
+    end;
+end;
+end;
+end;
+
+procedure TF_laporan_nilai.cb_kelasClick(Sender: TObject);
+begin
+with DM.q_nilai do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select ROW_NUMBER() over (order by nilai_kd) as NO,nilai.siswa_nis,siswa.siswa_nama,nilai.mapel_kd,kelas.kelas_nama,mapel.mapel_nama,nilai.nilai_ulangan,nilai.nilai_tugas,nilai.nilai_uts,nilai.nilai_uas,' +
+  'nilai.nilai_total,nilai.nilai_keterangan,kelas.guru_nip,guru.guru_nama from  mapel,nilai,siswa,kelas,guru where nilai.mapel_kd=mapel.mapel_kd and kelas.guru_nip=guru.guru_nip and nilai.siswa_nis=siswa.siswa_nis '+
+  'and siswa.kelas_kd=kelas.kelas_kd and kelas_nama like '+QuotedStr(cb_kelas.Text + '%' ) +'  order by siswa_nama ASC';
+  Active:=True;
+
+
+end;
+DBGrid1.DataSource:=DM.ds_nilai;
+end;
+
+procedure TF_laporan_nilai.cb_smtClick(Sender: TObject);
+begin
+ {with DM.q_nilai do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+   SQL.Text:='select ROW_NUMBER() over (order by nilai_kd) as NO, nilai.nilai_kd,nilai.tahun,mapel.mapel_smt,nilai.siswa_nis,siswa.siswa_nama,kelas.kelas_nama,mapel.mapel_kd,mapel.mapel_nama,nilai.nilai_ulangan,nilai.nilai_tugas,nilai.nilai_uts,nilai.nilai_uas,' +
+  'nilai.nilai_total,nilai.nilai_keterangan from siswa,nilai,mapel,kelas where nilai.siswa_nis=siswa.siswa_nis and nilai.mapel_kd=mapel.mapel_kd and siswa.kelas_kd=kelas.kelas_kd and mapel_smt like '+QuotedStr(cb_smt.Text + '%');
+  Active:=True;
+
+
+end;
+DBGrid1.DataSource:=DM.ds_nilai;  }
+end;
+
+procedure TF_laporan_nilai.edit_namaChange(Sender: TObject);
+begin
+if edit_nama.Text='' then
+begin
+with DM.q_nilai do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select ROW_NUMBER() over (order by nilai_kd) as NO, nilai.nilai_kd,nilai.tahun,mapel.mapel_smt,nilai.siswa_nis,siswa.siswa_nama,kelas.kelas_nama,mapel.mapel_kd,mapel.mapel_nama,nilai.nilai_ulangan,nilai.nilai_tugas,nilai.nilai_uts,nilai.nilai_uas,' +
+  'nilai.nilai_total,nilai.nilai_keterangan from siswa,nilai,mapel,kelas where nilai.siswa_nis=siswa.siswa_nis and nilai.mapel_kd=mapel.mapel_kd and siswa.kelas_kd=kelas.kelas_kd' ;
+  Active:=True;
+end;
+DBGrid1.DataSource:=DM.ds_nilai;
+
+end
+else
+begin
+ with DM.q_nilai do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+   SQL.Text:='select ROW_NUMBER() over (order by nilai_kd) as NO, nilai.nilai_kd,nilai.tahun,mapel.mapel_smt,nilai.siswa_nis,siswa.siswa_nama,kelas.kelas_nama,mapel.mapel_kd,mapel.mapel_nama,nilai.nilai_ulangan,nilai.nilai_tugas,nilai.nilai_uts,nilai.nilai_uas,' +
+  'nilai.nilai_total,nilai.nilai_keterangan from siswa,nilai,mapel,kelas where nilai.siswa_nis=siswa.siswa_nis and nilai.mapel_kd=mapel.mapel_kd and siswa.kelas_kd=kelas.kelas_kd and siswa_nama like '+QuotedStr(edit_nama.Text + '%');
+  Active:=True;
+
+
+end;
+DBGrid1.DataSource:=DM.ds_nilai;
+
+end;
+end;
+
+procedure TF_laporan_nilai.FormShow(Sender: TObject);
+begin
+DM.q_kelas.Active:=False;
+DM.q_kelas.SQL.Clear;
+DM.q_kelas.SQL.Add('select * from kelas');
+DM.q_kelas.Active:=True;
+cb_kelas.Items.Clear;
+while not DM.q_kelas.Eof do
+begin
+  cb_kelas.Items.Add(DM.q_kelas.FieldByName('kelas_nama').AsString);
+  DM.q_kelas.Next;
+end;
+bersih;
+end;
+
+end.

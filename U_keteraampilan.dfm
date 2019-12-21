@@ -1,0 +1,145 @@
+object F_keterampilan: TF_keterampilan
+  Left = 0
+  Top = 0
+  Caption = 'F_Kerpibadian'
+  ClientHeight = 365
+  ClientWidth = 584
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object sPanel1: TsPanel
+    Left = 8
+    Top = 8
+    Width = 569
+    Height = 41
+    Caption = 'INPUT DATA KEPRIBADIAN'
+    TabOrder = 0
+    SkinData.SkinSection = 'PANEL'
+  end
+  object sGroupBox1: TsGroupBox
+    Left = 8
+    Top = 63
+    Width = 568
+    Height = 250
+    Caption = 'sGroupBox1'
+    TabOrder = 1
+    SkinData.SkinSection = 'GROUPBOX'
+    object sLabel1: TsLabel
+      Left = 16
+      Top = 27
+      Width = 83
+      Height = 13
+      Caption = 'Jenis Kepribadian'
+      ParentFont = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 14021375
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object sLabel2: TsLabel
+      Left = 16
+      Top = 67
+      Width = 56
+      Height = 13
+      Caption = 'Keterangan'
+      ParentFont = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 14021375
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object edit_jenis: TsEdit
+      Left = 152
+      Top = 24
+      Width = 393
+      Height = 21
+      Color = 15661823
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 0
+      Text = 'edit_jenis'
+      SkinData.SkinSection = 'EDIT'
+      BoundLabel.Indent = 0
+      BoundLabel.Font.Charset = DEFAULT_CHARSET
+      BoundLabel.Font.Color = clWindowText
+      BoundLabel.Font.Height = -11
+      BoundLabel.Font.Name = 'Tahoma'
+      BoundLabel.Font.Style = []
+      BoundLabel.Layout = sclLeft
+      BoundLabel.MaxWidth = 0
+      BoundLabel.UseSkinColor = True
+    end
+    object edit_kepribadian: TsMemo
+      Left = 152
+      Top = 64
+      Width = 393
+      Height = 89
+      Color = 15661823
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      Lines.Strings = (
+        'edit_kepribadian')
+      ParentFont = False
+      TabOrder = 1
+      Text = 'edit_kepribadian'
+      BoundLabel.Indent = 0
+      BoundLabel.Font.Charset = DEFAULT_CHARSET
+      BoundLabel.Font.Color = clWindowText
+      BoundLabel.Font.Height = -11
+      BoundLabel.Font.Name = 'Tahoma'
+      BoundLabel.Font.Style = []
+      BoundLabel.Layout = sclLeft
+      BoundLabel.MaxWidth = 0
+      BoundLabel.UseSkinColor = True
+      SkinData.SkinSection = 'EDIT'
+    end
+    object btn_simpan: TsBitBtn
+      Left = 136
+      Top = 193
+      Width = 75
+      Height = 25
+      Caption = 'Simpan'
+      DoubleBuffered = True
+      ParentDoubleBuffered = False
+      TabOrder = 2
+      SkinData.SkinSection = 'BUTTON'
+    end
+    object btn_edit: TsBitBtn
+      Left = 272
+      Top = 193
+      Width = 75
+      Height = 25
+      Caption = 'Edit'
+      DoubleBuffered = True
+      ParentDoubleBuffered = False
+      TabOrder = 3
+      SkinData.SkinSection = 'BUTTON'
+    end
+    object btn_hapus: TsBitBtn
+      Left = 408
+      Top = 193
+      Width = 73
+      Height = 25
+      Caption = 'Hapus'
+      DoubleBuffered = True
+      ParentDoubleBuffered = False
+      TabOrder = 4
+      SkinData.SkinSection = 'BUTTON'
+    end
+  end
+end

@@ -1,0 +1,215 @@
+unit U_data_siswa;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, StdCtrls, Buttons, sBitBtn, sEdit, sComboBox,
+  sGroupBox, sLabel;
+
+type
+  TF_data_siswa = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sLabel3: TsLabel;
+    sGroupBox2: TsGroupBox;
+    sLabel1: TsLabel;
+    sLabel2: TsLabel;
+    cb_kategori: TsComboBox;
+    Edit_key: TsEdit;
+    DBGrid1: TDBGrid;
+    sGroupBox3: TsGroupBox;
+    btn_ubah: TsBitBtn;
+    btn_tambah: TsBitBtn;
+    btn_hapus: TsBitBtn;
+    procedure btn_tambahClick(Sender: TObject);
+    procedure Edit_keyChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure btn_ubahClick(Sender: TObject);
+    procedure btn_hapusClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure tampil;
+  end;
+
+var
+  F_data_siswa: TF_data_siswa;
+
+implementation
+
+uses U_input_siswa, U_DM;
+
+{$R *.dfm}
+ function SetCueBanner(const Edit: TEdit; const Placeholder: String): Boolean;
+const
+  EM_SETCUEBANNER = $1501;
+var
+  UniStr: WideString;
+begin
+  UniStr := Placeholder;
+  SendMessage(Edit.Handle, EM_SETCUEBANNER, WParam(True),LParam(UniStr));
+  Result := GetLastError() = ERROR_SUCCESS;
+end;
+
+procedure TF_data_siswa.btn_hapusClick(Sender: TObject);
+begin
+if (Application.MessageBox('Yakin Hapus Data Siswa ini ?','KONFIRM',MB_YESNO+MB_ICONQUESTION)=ID_YES) then
+begin
+  try
+    DM.koneksi.BeginTrans;
+    with DM.q_siswa do
+    begin
+      Connection:=DM.koneksi;
+      SQL.Text:='delete from siswa where siswa_nis='+QuotedStr(sLabel3.Caption);
+      ExecSQL;
+    end;
+    DM.koneksi.CommitTrans;
+    ShowMessage('Data Siswa Terhapus');
+  except
+  DM.koneksi.RollbackTrans;
+  ShowMessage('Data Siswa Gagal Terhapus');
+
+  end;
+  tampil;
+end;
+
+end;
+
+procedure TF_data_siswa.btn_tambahClick(Sender: TObject);
+begin
+f_input_siswa.Show;
+f_input_siswa.edit_nis.Enabled:=True;
+f_input_siswa.edit_nis.SetFocus;
+f_input_siswa.btn_edit.Enabled:=False;
+f_input_siswa.btn_simpan.Enabled:=True;
+f_input_siswa.Image1.Picture:=nil;
+
+end;
+
+procedure TF_data_siswa.btn_ubahClick(Sender: TObject);
+begin
+f_input_siswa.Show;
+f_input_siswa.btn_edit.Enabled:=True;
+f_input_siswa.btn_simpan.Enabled:=False;
+f_input_siswa.edit_nis.Enabled:=False;
+f_input_siswa.edit_nama.SetFocus;
+
+with DM.q_siswa do
+begin
+  f_input_siswa.edit_nis.Text:=FieldByName('siswa_nis').AsString;
+  f_input_siswa.edit_nama.Text:=FieldByName('siswa_nama').AsString;
+  f_input_siswa.edit_tempat.Text:=FieldByName('siswa_tptlahir').AsString;
+  f_input_siswa.edit_tgl.Date:=FieldValues['siswa_tgllahir'];
+  f_input_siswa.jk:=FieldValues['siswa_jk'];
+  if f_input_siswa.jk='Laki-laki' then
+  begin
+    f_input_siswa.rb_laki.Checked:=True;
+    f_input_siswa.rb_perempuan.Checked:=False;
+  end
+  else
+  begin
+  f_input_siswa.rb_perempuan.Checked:=True;
+  f_input_siswa.rb_laki.Checked:=False;
+  end;
+  f_input_siswa.cb_agama.Text:=FieldByName('siswa_agama').AsString;
+  f_input_siswa.edit_wali.Text:=FieldByName('siswa_wali').AsString;
+  f_input_siswa.edit_wali_pkrjaan.Text:=FieldByName('siswa_walipkrj').AsString;
+  f_input_siswa.edit_alamat.Text:=FieldByName('siswa_alamat').AsString;
+  f_input_siswa.edit_angakatan.Text:=FieldByName('siswa_tahun').AsString;
+  f_input_siswa.cb_kelas.Text:=FieldByName('kelas_kd').AsString;
+
+  if (DM.q_siswa.FieldByName('foto').AsString='') or (DM.q_siswa.FieldByName('foto').AsString=null) then
+  begin
+    f_input_siswa.Image1.Picture:=nil;
+  end
+  else
+  begin
+    f_input_siswa.Image1.Picture.LoadFromFile(DM.q_siswa.FieldByName('foto').AsString);
+    f_input_siswa.foto:=DM.q_siswa.FieldByName('foto').AsString;
+  end;
+
+end;
+end;
+
+procedure TF_data_siswa.DBGrid1CellClick(Column: TColumn);
+begin
+with DM.q_siswa do
+begin
+  sLabel3.Caption:=FieldValues['siswa_nis'];
+end;
+end;
+
+procedure TF_data_siswa.DBGrid1DrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+if DBGrid1.DataSource.DataSet.RecNo mod 2 =0 then
+DBGrid1.Canvas.Brush.Color := clSkyBlue;
+DBGrid1.DefaultDrawColumnCell(rect, datacol, column, state);
+end;
+
+procedure TF_data_siswa.Edit_keyChange(Sender: TObject);
+var cari:string;
+begin
+  if cb_kategori.Text='NIS' then
+  cari:='siswa_nis'
+  else if cb_kategori.Text='Nama' then
+  cari:='siswa_nama';
+
+ if Edit_key.Text='' then
+ begin
+  with DM.q_siswa do
+  begin
+    Active:=False;
+    Close;
+    SQL.Clear;
+    SQL.Text:=' select ROW_NUMBER() over (order by siswa_nis ) as NO, * from siswa';
+    Active:=True;
+  end;
+  DBGrid1.DataSource:=DM.ds_siswa;
+ end
+ else
+ begin
+   with DM.q_siswa do
+   begin
+     Active:=False;
+     Close;
+     SQL.Clear;
+     SQL.Text:='   select ROW_NUMBER() over (order by siswa_nis ) as NO, * from siswa where '+cari+' like '+QuotedStr(Edit_key.Text+ '%');
+     Active:=True;
+   end;
+   DBGrid1.DataSource:=DM.ds_siswa;
+ end;
+
+
+end;
+
+procedure TF_data_siswa.FormShow(Sender: TObject);
+begin
+cb_kategori.Text:='Nama';
+Edit_key.Clear;
+Edit_key.SetFocus;
+sLabel3.Caption:='';
+
+SetCueBanner(Edit_key,'Masukkan Kata Pencarian');
+end;
+
+procedure TF_data_siswa.tampil;
+begin
+with DM.q_siswa do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select ROW_NUMBER() over (order by siswa_nis ) as NO, * from siswa';
+  Active:=True;
+  DBGrid1.DataSource:=DM.ds_siswa;
+  DM.ds_siswa.DataSet:=DM.q_siswa;
+end;
+
+end;
+
+end.

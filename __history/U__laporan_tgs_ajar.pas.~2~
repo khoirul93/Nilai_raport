@@ -1,0 +1,112 @@
+unit U__laporan_tgs_ajar;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, sPanel, StdCtrls, Buttons, sBitBtn, sEdit, sComboBox,
+  Grids, DBGrids, sLabel, sGroupBox;
+
+type
+  TF_laporan_tgs_ajar = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sLabel1: TsLabel;
+    sLabel3: TsLabel;
+    sGroupBox2: TsGroupBox;
+    cb_kelas: TsComboBox;
+    edit_nama: TsEdit;
+    btn_kelas: TsBitBtn;
+    btn_nama: TsBitBtn;
+    sPanel1: TsPanel;
+    DBGrid1: TDBGrid;
+    procedure FormShow(Sender: TObject);
+    procedure cb_kelasClick(Sender: TObject);
+    procedure edit_namaChange(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure bersih;
+  end;
+
+var
+  F_laporan_tgs_ajar: TF_laporan_tgs_ajar;
+
+implementation
+
+uses U_DM, U_laporan_tgs_g;
+
+{$R *.dfm}
+procedure TF_laporan_tgs_ajar.bersih;
+begin
+cb_kelas.Text:='--Pilih--';
+edit_nama.Clear;
+end;
+
+procedure TF_laporan_tgs_ajar.cb_kelasClick(Sender: TObject);
+begin
+with DM.q_tugasmengajar do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select ROW_NUMBER() over (order by tm_kd) as NO,tugasmengajar.tm_kd,tugasmengajar.guru_nip, guru.guru_nama,tugasmengajar.mapel_kd,mapel.mapel_nama,mapel.mapel_smt,mapel.mapel_status,'+
+  ' tugasmengajar.kelas_kd,kelas.kelas_nama,tugasmengajar.siswa from tugasmengajar,guru, kelas, mapel where tugasmengajar.guru_nip=guru.guru_nip and tugasmengajar.kelas_kd=kelas.kelas_kd and tugasmengajar.mapel_kd=mapel.mapel_kd'+
+  ' and kelas_nama like  '+QuotedStr(cb_kelas.Text) + ' order by guru_nama asc';
+  Active:=True;
+
+end;
+DBGrid1.DataSource:=DM.ds_tugasmengajar;
+end;
+
+procedure TF_laporan_tgs_ajar.edit_namaChange(Sender: TObject);
+begin
+if edit_nama.Text='' then
+begin
+  with DM.q_tugasmengajar do
+  begin
+    Active:=False;
+    Close;
+    SQL.Clear;
+     SQL.Text:='select ROW_NUMBER() over (order by tm_kd) as NO,tugasmengajar.tm_kd,tugasmengajar.guru_nip, guru.guru_nama,tugasmengajar.mapel_kd,mapel.mapel_nama,mapel.mapel_smt,mapel.mapel_status,'+
+  ' tugasmengajar.kelas_kd,kelas.kelas_nama,tugasmengajar.siswa from tugasmengajar,guru, kelas, mapel where tugasmengajar.guru_nip=guru.guru_nip and tugasmengajar.kelas_kd=kelas.kelas_kd and tugasmengajar.mapel_kd=mapel.mapel_kd'+
+  ' and guru_nama like  '+QuotedStr(edit_nama.Text + '%') + ' order by guru_nama asc';
+  Active:=True;
+
+  end;
+  DBGrid1.DataSource:=DM.ds_tugasmengajar;
+end
+else
+begin
+  with DM.q_tugasmengajar do
+  begin
+    Active:=False;
+    Close;
+    SQL.Clear;
+     SQL.Text:='select ROW_NUMBER() over (order by tm_kd) as NO,tugasmengajar.tm_kd,tugasmengajar.guru_nip, guru.guru_nama,tugasmengajar.mapel_kd,mapel.mapel_nama,mapel.mapel_smt,mapel.mapel_status,'+
+  ' tugasmengajar.kelas_kd,kelas.kelas_nama,tugasmengajar.siswa from tugasmengajar,guru, kelas, mapel where tugasmengajar.guru_nip=guru.guru_nip and tugasmengajar.kelas_kd=kelas.kelas_kd and tugasmengajar.mapel_kd=mapel.mapel_kd'+
+  ' and guru_nama like  '+QuotedStr(edit_nama.Text + '%') + ' order by guru_nama asc';
+  Active:=True;
+
+  end;
+  DBGrid1.DataSource:=DM.ds_tugasmengajar;
+end;
+end;
+
+procedure TF_laporan_tgs_ajar.FormShow(Sender: TObject);
+begin
+
+DM.q_kelas.Active:=False;
+DM.q_kelas.SQL.Clear;
+DM.q_kelas.SQL.Add('select * from kelas');
+DM.q_kelas.Active:=True;
+cb_kelas.Items.Clear;
+while not DM.q_kelas.Eof do
+begin
+  cb_kelas.Items.Add(DM.q_kelas.FieldByName('kelas_nama').AsString);
+  DM.q_kelas.Next;
+end;
+bersih;
+end;
+
+end.

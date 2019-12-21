@@ -1,0 +1,35 @@
+unit U__laporan_tgs_ajar;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, sPanel, StdCtrls, Buttons, sBitBtn, sEdit, sComboBox,
+  Grids, DBGrids, sLabel, sGroupBox;
+
+type
+  TF_laporan_tgs_ajar = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sLabel1: TsLabel;
+    sLabel3: TsLabel;
+    sGroupBox2: TsGroupBox;
+    DBGrid1: TDBGrid;
+    cb_kelas: TsComboBox;
+    edit_nama: TsEdit;
+    btn_kelas: TsBitBtn;
+    btn_nama: TsBitBtn;
+    sPanel1: TsPanel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  F_laporan_tgs_ajar: TF_laporan_tgs_ajar;
+
+implementation
+
+{$R *.dfm}
+
+end.

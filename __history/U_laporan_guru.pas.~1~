@@ -1,0 +1,24 @@
+unit U_laporan_guru;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs;
+
+type
+  TF_laporan_guru = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  F_laporan_guru: TF_laporan_guru;
+
+implementation
+
+{$R *.dfm}
+
+end.

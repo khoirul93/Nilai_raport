@@ -1,0 +1,79 @@
+unit U_input_kerpibadian;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, sGroupBox, ExtCtrls, sPanel, sLabel, sMemo, sEdit, Buttons,
+  sBitBtn;
+
+type
+  TF_input_kepribadian = class(TForm)
+    sPanel1: TsPanel;
+    sGroupBox1: TsGroupBox;
+    edit_jenis: TsEdit;
+    edit_kepribadian: TsMemo;
+    sLabel1: TsLabel;
+    sLabel2: TsLabel;
+    sGroupBox2: TsGroupBox;
+    btn_edit: TsBitBtn;
+    btn_simpan: TsBitBtn;
+    Btn_kembali: TsBitBtn;
+    btn_data: TsBitBtn;
+    edit_kd: TsEdit;
+    sLabel3: TsLabel;
+    procedure FormShow(Sender: TObject);
+    procedure btn_simpanClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure bersih;
+  end;
+
+var
+  F_input_kepribadian: TF_input_kepribadian;
+
+implementation
+
+uses U_input_guru, U_DM;
+
+{$R *.dfm}
+procedure TF_input_kepribadian.bersih;
+begin
+edit_kd.Clear;
+edit_jenis.Clear;
+edit_kd.SetFocus;
+edit_kepribadian.Clear;
+
+end;
+
+procedure TF_input_kepribadian.btn_simpanClick(Sender: TObject);
+begin
+if edit_kd.Text='' then
+begin
+Application.MessageBox('Data Kode Keibadian Masih Kosong','Waning',MB_OK+MB_ICONWARNING);
+edit_kd.SetFocus;
+end
+else if edit_jenis.Text='' then
+     begin
+        Application.MessageBox('Data Jenis Kepribadian Masih Kosong','Warning',MB_OK+MB_ICONWARNING);
+        edit_jenis.SetFocus;
+     end
+     else if edit_kepribadian.Text='' then
+          begin
+             Application.MessageBox('Data Keterangan Kepribadian Kosong','Warning',MB_OK+MB_ICONWARNING);
+             edit_kepribadian.SetFocus;
+          end
+          else
+begin
+ with DM.
+end;
+end;
+
+procedure TF_input_kepribadian.FormShow(Sender: TObject);
+begin
+bersih;
+end;
+
+end.

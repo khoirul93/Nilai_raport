@@ -1,0 +1,345 @@
+object F_input_kelas: TF_input_kelas
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  Caption = 'F_input_kelas'
+  ClientHeight = 388
+  ClientWidth = 589
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object sGroupBox1: TsGroupBox
+    Left = 8
+    Top = 55
+    Width = 569
+    Height = 242
+    Caption = 'Inputan'
+    TabOrder = 0
+    SkinData.SkinSection = 'GROUPBOX'
+    object sLabel1: TsLabel
+      Left = 18
+      Top = 67
+      Width = 55
+      Height = 13
+      Caption = 'Nama Kelas'
+      ParentFont = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object captin2: TsLabel
+      Left = 18
+      Top = 104
+      Width = 89
+      Height = 13
+      Caption = 'Nama Ruang Kelas'
+      ParentFont = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object sLabel3: TsLabel
+      Left = 18
+      Top = 152
+      Width = 48
+      Height = 13
+      Caption = 'Wali Kelas'
+      ParentFont = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object sLabel2: TsLabel
+      Left = 18
+      Top = 27
+      Width = 52
+      Height = 13
+      Caption = 'Kode Kelas'
+      ParentFont = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object sLabel4: TsLabel
+      Left = 24
+      Top = 192
+      Width = 78
+      Height = 13
+      Caption = 'Nama Wali Kelas'
+      ParentFont = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object Edit_nama: TsEdit
+      Left = 154
+      Top = 64
+      Width = 393
+      Height = 21
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 0
+      Text = 'Edit_nama'
+      SkinData.SkinSection = 'EDIT'
+      BoundLabel.Indent = 0
+      BoundLabel.Font.Charset = DEFAULT_CHARSET
+      BoundLabel.Font.Color = clWindowText
+      BoundLabel.Font.Height = -11
+      BoundLabel.Font.Name = 'Tahoma'
+      BoundLabel.Font.Style = []
+      BoundLabel.Layout = sclLeft
+      BoundLabel.MaxWidth = 0
+      BoundLabel.UseSkinColor = True
+    end
+    object edit_ruang: TsEdit
+      Left = 154
+      Top = 104
+      Width = 393
+      Height = 21
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+      Text = 'edit_ruang'
+      SkinData.SkinSection = 'EDIT'
+      BoundLabel.Indent = 0
+      BoundLabel.Font.Charset = DEFAULT_CHARSET
+      BoundLabel.Font.Color = clWindowText
+      BoundLabel.Font.Height = -11
+      BoundLabel.Font.Name = 'Tahoma'
+      BoundLabel.Font.Style = []
+      BoundLabel.Layout = sclLeft
+      BoundLabel.MaxWidth = 0
+      BoundLabel.UseSkinColor = True
+    end
+    object cb_wali: TsComboBox
+      Left = 154
+      Top = 149
+      Width = 393
+      Height = 22
+      Alignment = taLeftJustify
+      BoundLabel.Indent = 0
+      BoundLabel.Font.Charset = DEFAULT_CHARSET
+      BoundLabel.Font.Color = clWindowText
+      BoundLabel.Font.Height = -11
+      BoundLabel.Font.Name = 'Tahoma'
+      BoundLabel.Font.Style = []
+      BoundLabel.Layout = sclLeft
+      BoundLabel.MaxWidth = 0
+      BoundLabel.UseSkinColor = True
+      SkinData.SkinSection = 'COMBOBOX'
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ItemIndex = -1
+      ParentFont = False
+      TabOrder = 2
+      Text = 'cb_wali'
+      OnClick = cb_waliClick
+    end
+    object edit_kd: TsEdit
+      Left = 154
+      Top = 24
+      Width = 393
+      Height = 21
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 3
+      Text = 'edit_kd'
+      SkinData.SkinSection = 'EDIT'
+      BoundLabel.Indent = 0
+      BoundLabel.Font.Charset = DEFAULT_CHARSET
+      BoundLabel.Font.Color = clWindowText
+      BoundLabel.Font.Height = -11
+      BoundLabel.Font.Name = 'Tahoma'
+      BoundLabel.Font.Style = []
+      BoundLabel.Layout = sclLeft
+      BoundLabel.MaxWidth = 0
+      BoundLabel.UseSkinColor = True
+    end
+    object sEdit1: TsEdit
+      Left = 154
+      Top = 192
+      Width = 392
+      Height = 21
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 4
+      Text = 'sEdit1'
+      SkinData.SkinSection = 'EDIT'
+      BoundLabel.Indent = 0
+      BoundLabel.Font.Charset = DEFAULT_CHARSET
+      BoundLabel.Font.Color = clWindowText
+      BoundLabel.Font.Height = -11
+      BoundLabel.Font.Name = 'Tahoma'
+      BoundLabel.Font.Style = []
+      BoundLabel.Layout = sclLeft
+      BoundLabel.MaxWidth = 0
+      BoundLabel.UseSkinColor = True
+    end
+  end
+  object sPanel1: TsPanel
+    Left = 8
+    Top = 8
+    Width = 569
+    Height = 41
+    Caption = 'INPUT DATA KELAS'
+    TabOrder = 1
+    SkinData.SkinSection = 'PANEL'
+  end
+  object sGroupBox2: TsGroupBox
+    Left = 8
+    Top = 303
+    Width = 569
+    Height = 66
+    Caption = 'Proses'
+    TabOrder = 2
+    SkinData.SkinSection = 'GROUPBOX'
+    object btn_edit: TsBitBtn
+      Left = 448
+      Top = 16
+      Width = 90
+      Height = 41
+      Caption = 'Edit'
+      DoubleBuffered = True
+      Glyph.Data = {
+        E6040000424DE604000000000000360000002800000014000000140000000100
+        180000000000B0040000C40E0000C40E00000000000000000000FFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE5E5E5898989A6
+        A6A6CDCDCDD5D5D5D7D7D7D4D4D4DDDDDDE4E4E4F0F0F0F3F3F3F8F8F8FBFBFB
+        FEFEFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5353533636365A5A
+        5AB6B6B6E6E6E6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB7B7B73232328A8989BCBBBA
+        989796909091E4E1DBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE9E9E9979696DCDADABEBBBAAFACAB5E
+        5F62585041E0CEA7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA2A1A1D9D8D8C0BFBE7D7E817A766D9678
+        32664E17DDCEABFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFDBDBDBAFAFB0AFB0B2A5A39BAD862D8B620097772D
+        745E2AD9CBA9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFF98948DB0ADA5E3C06CD6AD4FAF8524885E0097783073
+        5C26DCCCAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFDF6E7B69243E3C072EDCA7AD3AC52B48929885F0095752B745D
+        28DACBA9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFF5EAD1B89647E7C578EAC773D4AD53AA811F895F0097793077612D
+        DFCEADFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFCF5E6B99647E2C070EECB7BD4AC53B48929885E0097772D6C551EDE
+        CFACFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFF6EDD8BF9B4DE3C379EBC878D3AC52AF85248A610397772D796230DACB
+        AAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFF7EDD8BD9B4CE9C982ECCA7BD4AD53AF8524885E0097772E765D25D9CBAC
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFCF5E6BF9C4BE2BF71EBC876D3AC52B388278C6404938874635E57E4DCCBFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        F5EBD2C19D4CE7C575EBC775D1A53FB4A88EEDF0F5C9C9CC8A7B59FBF3E1FFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC
+        F5E6C3A04FE1C076DFD5C1D0D2D9E1E1DFAEA69689806DD3CFC8FFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBF0
+        D7A5926CC4C5C8F6F5F5B9B3A5B2AB9AA09580DAD5CAFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF4EBD8
+        A69A81B5B0A6CBC4B2C8C4B7AE9D7AFCF6E8FFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCF4BF
+        AD82B4AEA0C9B78EF9F3E4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFF}
+      ParentDoubleBuffered = False
+      TabOrder = 0
+      OnClick = btn_editClick
+      SkinData.SkinSection = 'BUTTON'
+    end
+    object btn_simpan: TsBitBtn
+      Left = 24
+      Top = 19
+      Width = 89
+      Height = 41
+      Caption = 'Simpan'
+      DoubleBuffered = True
+      Glyph.Data = {
+        E6040000424DE604000000000000360000002800000014000000140000000100
+        180000000000B0040000C40E0000C40E00000000000000000000FEFEFEFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFEFEF5F5F5E3E3E4D4D6DAC2
+        B28F7C6E4F827457877B61877C63847658837557847657847658847659837659
+        83765A8275588275587D6F519F906FF8F9FDFFFFFFFFFFFFDDCBA5978252C6A9
+        68BAA882CABEA6BCA777DEDEDEDADADDD4D3D6D0D2D7B1A58BA08443A3884AAA
+        8D4ABA9644C8AB65937F54FFFFFFFFFFFFDFD0AE957C46C4A55BAB7907A38C57
+        8A6E2F714200C9C5C1C6C5C5BBB9B8B8B7BB8D7B50794F007C54008E6404A270
+        00BE973D9D895EFFFFFFFFFFFF9D8757CBAD69AC7A05B1800FB29C6A9A7F4380
+        5100DCDAD6DBDBDCD3D1D1D1D1D5A08D65855B008860069A7012AE7C07C59F47
+        A28E61FFFFFFFFFFFFA89363CEA84EB5820CBE8E1FBDA8779E8142774900EFED
+        EAF0F0F2E7E7E8E8E8EFB09D768C6405906A10A37A1EBB8916CEA850A89363FF
+        FFFFFFFFFFAE9865D5B059C08D1BC5972BB7A06AEDE9E1DED5C2F6F5F3F4F3F1
+        EEEDEBEEEFF2B6A47C926A0F966F18AA8329C59424D4B059AE9865FFFFFFFFFF
+        FFB59D68DDB864CA9929D1A43EB89136B48A29B58B2BB38825B28724B38825B4
+        8826B99031BD963DBC953CC69E43CD9D2FDCB763B59D68FFFFFFFFFFFFBBA36B
+        E5C16FD6A73BD8AA41DCAD44DCAD44DCAD44DCAD44DCAD44DCAD44DCAD44DCAD
+        44DCAD44DCAE44DBAC43D7A73BE5C16FBBA36BFFFFFFFFFFFFC1A86EECC979E2
+        B44CD8AD4DCDA13ECEA33FCEA33FCEA33FCEA33FCEA33FCEA33FCEA33FCEA33F
+        CEA33FCFA443DEB14BEDC978C1A86EFFFFFFFFFFFFC4AA6FF1D085E8BE5ED5AB
+        4FF1E8D3EBDDBCECDEBDECDEBDECDEBDECDEBDECDEBDECDEBDECDEBDEDE0C1E0
+        CA99E0B555F1D084C4AA6FFFFFFFFFFFFFC6AB6FF2D38EEAC46CD7B25CEDE1C7
+        E2CE9EE3CFA1E3CFA1E3CFA1E3CFA1E3CFA1E3CFA1E3CFA1E4D1A4DBC38BE3BC
+        64F2D48DC6AB70FFFFFFFFFFFFC6AC70F3D899ECCA7BD8B76AF0E8D4E7D8B3E8
+        D9B6E8D9B6E8D9B6E8D9B6E8D9B6E8D9B6E8D9B6E9DBB9DFCB9DE4C273F3D798
+        C6AC70FFFFFFFFFFFFC8AD71F5DBA3EFD18ADABC77F3EFE0ECE0C4EDE1C6EDE1
+        C6EDE1C6EDE1C6EDE1C6EDE1C6EDE1C6EEE3C9E2D2ACE7C882F5DCA2C8AD71FF
+        FFFFFFFFFFC9AE72F5DFABF1D697DCC083F6F2E8EEE5CFEFE6D1EFE6D1EFE6D1
+        EFE6D1EFE6D1EFE6D1EFE6D1F0E8D4E4D6B7E8CE8DF6E0AAC9AE72FFFFFFFFFF
+        FFCBAF73F7E3B6F4DCA9DDC793F8F5F0F2ECDDF3ECDEF3ECDEF3ECDEF3ECDEF3
+        ECDEF3ECDEF3ECDEF4EEE1E8DCC3EBD49FF8E4B5CAAF73FFFFFFFFFFFFCBB174
+        F9E7C0F5E3B7DECC9FFBF9F6F5F0E6F5F0E7F5F0E7F5F0E7F5F0E7F5F0E7F5F0
+        E7F5F0E7F7F2EAEAE0CEEDD9ACF9E8C0CBB174FFFFFFFFFFFFCCAF71FBEBC2FB
+        ECCAEADBB7FFFFFFFBF9F6FBF9F6FBF9F6FBF9F6FBF9F6FBF9F6FBF9F6FBF9F6
+        FCFBF9F2EDE1F4E4C1FBEAC2CBAF70FFFFFFFFFFFFD8C18ECDB172CEB377CBAF
+        6FE9DDC3E6D9BBE7D9BBE7D9BBE7D9BBE7D9BBE7D9BBE7D9BBE7D9BBE8DBBEDE
+        CCA4CCB072CCB072DBC58FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFF}
+      ParentDoubleBuffered = False
+      TabOrder = 1
+      OnClick = btn_simpanClick
+      SkinData.SkinSection = 'BUTTON'
+    end
+  end
+end

@@ -1,0 +1,275 @@
+unit U_data_akademis;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, sGroupBox, sComboBox, Buttons, sBitBtn, sEdit, Grids,
+  DBGrids, sLabel, DB, ADODB;
+
+type
+  TF_data_akademis = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sLabel3: TsLabel;
+    sGroupBox2: TsGroupBox;
+    sLabel1: TsLabel;
+    sLabel2: TsLabel;
+    cb_kategori: TsComboBox;
+    Edit_key: TsEdit;
+    sGroupBox3: TsGroupBox;
+    btn_ubah: TsBitBtn;
+    btn_tambah: TsBitBtn;
+    btn_hapus: TsBitBtn;
+    DBGrid1: TDBGrid;
+    ADOQuery1: TADOQuery;
+    procedure FormShow(Sender: TObject);
+    procedure btn_tambahClick(Sender: TObject);
+    procedure btn_ubahClick(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure btn_hapusClick(Sender: TObject);
+    procedure Edit_keyChange(Sender: TObject);
+    procedure DBGrid1TitleClick(Column: TColumn);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure tampil;
+  end;
+
+var
+  F_data_akademis: TF_data_akademis;
+
+implementation
+
+uses U_DM, U_input_kepribadian;
+
+{$R *.dfm}
+procedure TF_data_akademis.tampil;
+begin
+with DM.q_tugasmengajar do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select ROW_NUMBER() over (order by akademis_kd ) as NO, akademis.akademis_kd, siswa.siswa_nis, siswa.siswa_nama,kepribadian.kep_kd,kepribadian.kep_jenis,akademis.nilai,akademis.akademis_keterangan from akademis,siswa, kepribadian ' +
+   ' where akademis.siswa_nis=siswa.siswa_nis and akademis.kep_kd=kepribadian.kep_kd';
+  Active:=True;
+  DBGrid1.DataSource:=DM.ds_akadeis;
+  DM.ds_akadeis.DataSet:=DM.q_akademis;
+ end;
+
+end;
+
+procedure TF_data_akademis.btn_hapusClick(Sender: TObject);
+begin
+if (Application.MessageBox('Yakin Hapus Data Akademis ini ?','KONFIRM',MB_YESNO+MB_ICONQUESTION)=ID_YES) then
+begin
+  try
+   DM.koneksi.BeginTrans;
+   with DM.q_akademis do
+   begin
+     Connection:=DM.koneksi;
+     SQL.Text:='delete from akademis where akademis_kd='+QuotedStr(sLabel3.Caption);
+     ExecSQL;
+   end;
+   DM.koneksi.CommitTrans;
+   ShowMessage('Data Akademis Terhapus');
+  except
+   DM.koneksi.RollbackTrans;
+   ShowMessage('Data Akademus Gagal Terhapus');
+  end;
+  tampil;
+end;
+end;
+
+procedure TF_data_akademis.btn_tambahClick(Sender: TObject);
+begin
+f_input_akademis.Show;
+f_input_akademis.edit_kd.Enabled:=False;
+//f_input_akademis.edit_kd.SetFocus;
+f_input_akademis.btn_edit.Enabled:=False;
+f_input_akademis.btn_simpan.Enabled:=True;
+
+with DM.q_akademis do
+begin
+  Close;
+  SQL.Clear;
+  SQL.Add('select * from akademis');
+  Open;
+  if (DM.q_akademis.RecordCount<=0) then
+  begin
+    f_input_akademis.edit_kd.Text:='AKD001';
+  end
+  else
+  begin
+    DM.q_akademis.Close;
+    DM.q_akademis.SQL.Clear;
+    DM.q_akademis.SQL.Add('select max(right(akademis_kd,3))as kode from akademis');
+    DM.q_akademis.Open;
+    f_input_akademis.edit_kd.Text:='AKD00'+IntToStr(DM.q_akademis['kode']+1);
+  end
+
+     end;
+end;
+
+procedure TF_data_akademis.btn_ubahClick(Sender: TObject);
+begin
+f_input_akademis.Show;
+f_input_akademis.btn_simpan.Enabled:=False;
+f_input_akademis.btn_edit.Enabled:=True;
+f_input_akademis.edit_kd.Enabled:=False;
+f_input_akademis.cb_nis.Enabled:=False;
+
+with DM.q_akademis do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select* from akademis';
+  Active:=True;
+  f_input_akademis.edit_kd.Text:=FieldByName('akademis_kd').AsString;
+  f_input_akademis.cb_nis.Text:=FieldByName('siswa_nis').AsString;
+  f_input_akademis.cb_kepribadian.Text:=FieldByName('kep_kd').AsString;
+  f_input_akademis.Cb_nilai.Text:=FieldByName('nilai').AsString;
+  f_input_akademis.edit_keterangan.Text:=FieldByName('akademis_keterangan').AsString;
+end;
+with DM.q_siswa do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select * from siswa where siswa_nis='+QuotedStr(f_input_akademis.cb_nis.Text);
+  Active:=True;
+  f_input_akademis.edit_nama.Text:=FieldByName('siswa_nama').AsString;
+  f_input_akademis.cb_kelas.Text:=FieldByName('kelas_kd').AsString;
+end;
+with DM.q_kepribadian do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select * from kepribadian where kep_kd='+QuotedStr(f_input_akademis.cb_kepribadian.Text);
+  Active:=True;
+  f_input_akademis.edit_keprbadian.Text:=FieldByName('kep_jenis').AsString;
+end;
+end;
+
+procedure TF_data_akademis.DBGrid1CellClick(Column: TColumn);
+begin
+with DM.q_akademis do
+begin
+  sLabel3.Caption:=FieldByName('akademis_kd').AsString;
+end;
+
+end;
+
+procedure TF_data_akademis.DBGrid1DrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+
+  begin
+if DBGrid1.DataSource.DataSet.RecNo mod 2 =0 then
+DBGrid1.Canvas.Brush.Color := clSkyBlue;
+DBGrid1.DefaultDrawColumnCell(rect, datacol, column, state);
+
+
+
+
+if DM.q_akademis.FieldByName('nilai').AsString='A'  then
+DBGrid1.Canvas.Brush.Color:=clGreen;
+DBGrid1.DefaultDrawColumnCell(rect, datacol, column, state);
+
+if DM.q_akademis.FieldByName('nilai').AsString='B'  then
+DBGrid1.Canvas.Brush.Color:=clSkyBlue;
+DBGrid1.DefaultDrawColumnCell(rect, datacol, column, state);
+
+if DM.q_akademis.FieldByName('nilai').AsString='C'  then
+DBGrid1.Canvas.Brush.Color:=clYellow;
+DBGrid1.DefaultDrawColumnCell(rect, datacol, column, state);
+
+if DM.q_akademis.FieldByName('nilai').AsString='D'  then
+DBGrid1.Canvas.Brush.Color:=clFuchsia;
+DBGrid1.DefaultDrawColumnCell(rect, datacol, column, state);
+
+if DM.q_akademis.FieldByName('nilai').AsString='E'  then
+DBGrid1.Canvas.Brush.Color:=clRed;
+
+DBGrid1.DefaultDrawColumnCell(rect, datacol, column, state);
+end;
+
+
+
+procedure TF_data_akademis.DBGrid1TitleClick(Column: TColumn);
+//var i:byte;
+begin
+ {with TDBGrid(Column.Grid) do
+ begin
+   for i := 0 to Columns.Count - 1 do
+    begin
+      if Columns[i]=Column then
+      begin
+        DM.q_akademis.Sort:=DBGrid1.Columns[i].FieldName;
+        Columns[i].Title.Font.Style:=Columns[i].Title.Font.Style+[fsBold];
+      end
+      else
+      Columns[i].Title.Font.Style:=Columns[i].Title.Font.Style-[fsBold];
+    end;
+ end;}
+
+end;
+
+procedure TF_data_akademis.Edit_keyChange(Sender: TObject);
+var cari:string;
+begin
+if cb_kategori.Text='Kode Akademis' then
+cari:='akademis_kd'
+else if cb_kategori.Text='NIS Siswa' then
+cari:='siswa_nis'
+else if cb_kategori.Text='Nama Siswa' then
+cari:='siswa_nama'
+else if cb_kategori.Text='Jenis Kepribadian' then
+cari:='kep_jenis';
+
+if Edit_key.Text='' then
+begin
+  with DM.q_akademis do
+  begin
+     Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select ROW_NUMBER() over (order by akademis_kd ) as NO, akademis.akademis_kd, siswa.siswa_nis, siswa.siswa_nama,kepribadian.kep_kd,kepribadian.kep_jenis,akademis.nilai,akademis.akademis_keterangan from akademis,siswa, kepribadian ' +
+   ' where akademis.siswa_nis=siswa.siswa_nis and akademis.kep_kd=kepribadian.kep_kd';
+  Active:=True;
+  end;
+  DBGrid1.DataSource:=DM.ds_akadeis;
+end
+else
+begin
+  with DM.q_akademis do
+  begin
+     Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select ROW_NUMBER() over (order by akademis_kd ) as NO, akademis.akademis_kd, siswa.siswa_nis, siswa.siswa_nama,kepribadian.kep_kd,kepribadian.kep_jenis,akademis.nilai,akademis.akademis_keterangan from akademis,siswa, kepribadian ' +
+   ' where akademis.siswa_nis=siswa.siswa_nis and akademis.kep_kd=kepribadian.kep_kd and '+cari+' like '+QuotedStr(Edit_key.Text+ '%');
+  Active:=True;
+  end;
+  DBGrid1.DataSource:=DM.ds_akadeis;
+end;
+
+
+
+
+
+end;
+
+procedure TF_data_akademis.FormShow(Sender: TObject);
+begin
+cb_kategori.Text:='Nama Siswa';
+Edit_key.Clear;
+Edit_key.SetFocus;
+sLabel3.Caption:='';
+end;
+
+end.

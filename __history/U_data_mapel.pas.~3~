@@ -1,0 +1,106 @@
+unit U_data_mapel;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, StdCtrls, Buttons, sBitBtn, sEdit, sComboBox,
+  sGroupBox, sLabel;
+
+type
+  TF_data_mapel = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sGroupBox2: TsGroupBox;
+    cb_kategori: TsComboBox;
+    DBGrid1: TDBGrid;
+    Edit_key: TsEdit;
+
+    procedure Edit_keyChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure tampil;
+
+  end;
+
+var
+  F_data_mapel: TF_data_mapel;
+
+implementation
+
+uses U_DM;
+
+{$R *.dfm}
+procedure TF_data_mapel.tampil;
+begin
+
+ begin
+with DM.q_mapel do
+ begin
+   Active:=False;
+   Close;
+   SQL.Clear;
+   SQL.Text:='select ROW_NUMBER() over (order by mapel_kd ) as NO, mapel_kd as kode_Mata_Pelajaran,mapel_nama as Nama_Mata_Pelajaran,mapel_smt as Semester,mapel_status as Status from mapel;';
+   Active:=True;
+   DBGrid1.DataSource:=DM.ds_mapel;
+   DM.ds_mapel.DataSet:=DM.q_mapel;
+ end;
+ end;
+end;
+
+procedure TF_data_mapel.Edit_keyChange(Sender: TObject);
+var cari:string;
+begin
+if cb_kategori.Text='Kode Mata Pelajaran' then
+cari:='mapel_kd'
+else if cb_kategori.Text='Nama Mata Pelajaran' then
+cari:='mapel_nama'
+else  if cb_kategori.Text='Semester' then
+cari:='mapel_smt'
+else if cb_kategori.Text='Status' then
+cari:='mapel_status';
+
+
+
+
+
+
+
+ if Edit_key.Text='' then
+ begin
+  with DM.q_mapel do
+  begin
+    Active:=False;
+    Close;
+    SQL.Clear;
+    SQL.Text:='select ROW_NUMBER() over (order by mapel_kd ) as NO, mapel_kd as kode_Mata_Pelajaran,mapel_nama as Nama_Mata_Pelajaran,mapel_smt as Semester,mapel_status as Status from mapel;';
+    Active:=True;
+  end;
+  DBGrid1.DataSource:=DM.ds_mapel;
+ end
+ else
+ begin
+   with DM.q_mapel do
+   begin
+     Active:=False;
+     Close;
+     SQL.Clear;
+     SQL.Text:='  select ROW_NUMBER() over (order by mapel_kd ) as NO, mapel_kd as kode_Mata_Pelajaran,mapel_nama as Nama_Mata_Pelajaran,mapel_smt as Semester,mapel_status as Status from mapel where '+cari+' like '+QuotedStr(Edit_key.Text+ '%');
+     Active:=True;
+   end;
+   DBGrid1.DataSource:=DM.ds_mapel;
+ end;
+
+
+end;
+
+procedure TF_data_mapel.FormShow(Sender: TObject);
+begin
+cb_kategori.Text:='Nama Mata Pelajaran' ;
+Edit_key.Clear;
+
+end;
+
+end.

@@ -1,0 +1,42 @@
+unit U_koneksi;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, sPanel, StdCtrls, sEdit, Buttons, sBitBtn, sLabel,
+  sGroupBox;
+
+type
+  Tf_koneksi = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sLabel1: TsLabel;
+    sLabel2: TsLabel;
+    sBitBtn1: TsBitBtn;
+    sEdit1: TsEdit;
+    sEdit2: TsEdit;
+    sBitBtn2: TsBitBtn;
+    sPanel1: TsPanel;
+    sLabel3: TsLabel;
+    procedure FormMouseEnter(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  f_koneksi: Tf_koneksi;
+
+implementation
+
+uses U_DM, U_menu;
+
+{$R *.dfm}
+
+procedure Tf_koneksi.FormMouseEnter(Sender: TObject);
+begin
+sBitBtn1Click(Sender);
+end;
+
+end.

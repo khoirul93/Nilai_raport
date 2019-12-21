@@ -1,0 +1,39 @@
+unit U_data_akun;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, StdCtrls, Buttons, sBitBtn, sEdit, sComboBox,
+  sGroupBox, sLabel;
+
+type
+  TF_data_akun = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sLabel3: TsLabel;
+    sGroupBox2: TsGroupBox;
+    sLabel1: TsLabel;
+    sLabel2: TsLabel;
+    cb_kategori: TsComboBox;
+    Edit_key: TsEdit;
+    sGroupBox3: TsGroupBox;
+    btn_ubah: TsBitBtn;
+    btn_tambah: TsBitBtn;
+    btn_hapus: TsBitBtn;
+    DBGrid1: TDBGrid;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  F_data_akun: TF_data_akun;
+
+implementation
+
+uses U_DM;
+
+{$R *.dfm}
+
+end.

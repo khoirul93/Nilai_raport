@@ -1,0 +1,78 @@
+unit U_koneksi;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, sPanel, StdCtrls, sEdit, Buttons, sBitBtn, sLabel,
+  sGroupBox;
+
+type
+  Tf_koneksi = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sLabel1: TsLabel;
+    sLabel2: TsLabel;
+    sBitBtn1: TsBitBtn;
+    sEdit1: TsEdit;
+    sEdit2: TsEdit;
+    sBitBtn2: TsBitBtn;
+    sPanel1: TsPanel;
+    sLabel3: TsLabel;
+    procedure sBitBtn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  f_koneksi: Tf_koneksi;
+
+implementation
+
+uses U_DM, U_menu;
+
+{$R *.dfm}
+
+procedure Tf_koneksi.sBitBtn1Click(Sender: TObject);
+begin
+try
+ with DM.koneksi do
+ begin
+   LoginPrompt:=False;
+   ConnectionString:='Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=' +sEdit1.Text+';Data Source=' +sEdit2.Text;
+   Connected:=True;
+ end;
+ ShowMessage('Sukses Konek');
+ DM.q_absen.Connection:=DM.koneksi;
+ DM.ds_absen.DataSet:=DM.q_absen;
+ DM.q_akademis.Connection:=DM.koneksi;
+ DM.ds_akadeis.DataSet:=DM.q_akademis;
+ DM.q_kepribadian.Connection:=DM.koneksi;
+ DM.ds_kepribadian.DataSet:=DM.q_kepribadian;
+ DM.q_guru.Connection:=DM.koneksi;
+ DM.ds_guru.DataSet:=DM.q_guru;
+ DM.q_kelas.Connection:=DM.koneksi;
+ DM.ds_kelas.DataSet:=DM.q_kelas;
+ DM.q_login.Connection:=DM.koneksi;
+ DM.ds_login.DataSet:=DM.q_login;
+ DM.q_mapel.Connection:=DM.koneksi;
+ DM.ds_mapel.DataSet:=DM.q_mapel;
+ DM.q_nilai.Connection:=DM.koneksi;
+ DM.ds_nilai.DataSet:=DM.q_nilai;
+ DM.q_siswa.Connection:=DM.koneksi;
+ DM.ds_siswa.DataSet:=DM.q_siswa;
+ DM.q_tugasmengajar.Connection:=DM.koneksi;
+ DM.ds_tugasmengajar.DataSet:=DM.q_tugasmengajar;
+
+
+f_menu.Show;
+f_koneksi.Hide;
+ Except
+ShowMessage('GAGAL KONEK');
+
+end;
+
+end;
+
+end.

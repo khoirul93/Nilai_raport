@@ -1,0 +1,183 @@
+unit U_data_akun;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, StdCtrls, Buttons, sBitBtn, sEdit, sComboBox,
+  sGroupBox, sLabel;
+
+type
+  TF_data_akun = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sLabel3: TsLabel;
+    sGroupBox2: TsGroupBox;
+    sLabel1: TsLabel;
+    sLabel2: TsLabel;
+    cb_kategori: TsComboBox;
+    Edit_key: TsEdit;
+    sGroupBox3: TsGroupBox;
+    btn_ubah: TsBitBtn;
+    btn_tambah: TsBitBtn;
+    btn_hapus: TsBitBtn;
+    DBGrid1: TDBGrid;
+    procedure FormShow(Sender: TObject);
+    procedure btn_hapusClick(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure btn_tambahClick(Sender: TObject);
+    procedure btn_ubahClick(Sender: TObject);
+    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+     procedure tampil;
+  end;
+
+var
+  F_data_akun: TF_data_akun;
+
+implementation
+
+uses U_DM, U_input_login;
+
+{$R *.dfm}
+
+function SetCueBanner(const Edit: TEdit; const Placeholder: String): Boolean;
+const
+  EM_SETCUEBANNER = $1501;
+var
+  UniStr: WideString;
+begin
+  UniStr := Placeholder;
+  SendMessage(Edit.Handle, EM_SETCUEBANNER, WParam(True),LParam(UniStr));
+  Result := GetLastError() = ERROR_SUCCESS;
+end;
+
+
+
+procedure TF_data_akun.btn_hapusClick(Sender: TObject);
+begin
+if (Application.MessageBox('Yakin Hapus Data Akun ini ?','KONFIRM',MB_YESNO+MB_ICONQUESTION)=ID_YES) then
+try
+  DM.koneksi.BeginTrans;
+  with DM.q_login do
+  begin
+    Connection:=DM.koneksi;
+    SQL.Text:='delete from login where login_kd='+QuotedStr(sLabel3.Caption);
+    ExecSQL;
+  end;
+  DM.koneksi.CommitTrans;
+  ShowMessage('Data Akun Terhapus');
+except
+  DM.koneksi.RollbackTrans;
+  ShowMessage('Data Akun Gagal Terhapus');
+end;
+tampil;
+end;
+
+procedure TF_data_akun.btn_tambahClick(Sender: TObject);
+begin
+f_input_login.Show;
+f_input_login.edit_kd.Enabled:=False;
+//f_input_login.cb_nip.SetFocus;
+f_input_login.btn_edit.Enabled:=False;
+f_input_login.btn_simpan.Enabled:=True;
+
+
+with DM.ADOQuery1 do
+begin
+  Close;
+  SQL.Clear;
+  SQL.Add('select * from login');
+  Open;
+  if (DM.ADOQuery1.RecordCount<=0) then
+  begin
+    f_input_login.edit_kd.Text:='LOG001';
+  end
+  else
+  begin
+    DM.ADOQuery1.Close;
+    DM.ADOQuery1.SQL.Clear;
+    DM.ADOQuery1.SQL.Add('select max(right(login_kd,3))as kode from login');
+    DM.ADOQuery1.Open;
+    f_input_login.edit_kd.Text:='LOG00'+IntToStr(DM.ADOQuery1['kode']+1);
+  end
+
+     end;
+end;
+
+procedure TF_data_akun.btn_ubahClick(Sender: TObject);
+begin
+f_input_login.Show;
+f_input_login.btn_simpan.Enabled:=False;
+f_input_login.btn_edit.Enabled:=True;
+f_input_login.edit_kd.Enabled:=False;
+f_input_login.cb_nip.SetFocus;
+
+with DM.q_login do
+begin
+
+  f_input_login.edit_kd.Text:=FieldByName('login_kd').AsString;
+  f_input_login.cb_nip.Text:=FieldByName('guru_nip').AsString;
+  f_input_login.edit_username.Text:=FieldByName('login_user').AsString;
+  f_input_login.edit_pass.Text:=FieldByName('login_pass').AsString;
+  f_input_login.edit_langpass.Text:=FieldByName('login_pass').AsString;
+  f_input_login.cb_status.Text:=FieldByName('jabatan').AsString;
+end;
+
+with DM.q_guru do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select * from guru where guru_nip='+QuotedStr(f_input_login.cb_nip.Text);
+  Active:=True;
+  f_input_login.sEdit1.Text:=FieldByName('guru_nama').AsString;
+
+end;
+end;
+
+procedure TF_data_akun.DBGrid1CellClick(Column: TColumn);
+begin
+with DM.q_login do
+begin
+  sLabel3.Caption:=DM.q_login.FieldByName('login_kd').AsString;
+end;
+end;
+
+procedure TF_data_akun.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+  DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+if DBGrid1.DataSource.DataSet.RecNo mod 2 =0 then
+DBGrid1.Canvas.Brush.Color := clSkyBlue;
+DBGrid1.DefaultDrawColumnCell(rect, datacol, column, state);
+end;
+
+procedure TF_data_akun.FormShow(Sender: TObject);
+begin
+  tampil;
+  cb_kategori.Text:='Nama Guru';
+  Edit_key.Clear;
+  Edit_key.SetFocus;
+  sLabel3.Caption:='';
+  SetCueBanner(Edit_key,'Masukkan Kata Pencarian');
+end;
+
+procedure TF_data_akun.tampil;
+begin
+with DM.q_login do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select ROW_NUMBER() over (order by login_kd ) as NO,login.login_pass, login.login_kd,login.guru_nip, guru.guru_nama, login.login_user, login.jabatan from login, guru where login.guru_nip=guru.guru_nip';
+  Active:=True;
+  DBGrid1.DataSource:=DM.ds_login;
+  DM.ds_login.DataSet:=DM.q_login;
+end;
+
+end;
+
+end.

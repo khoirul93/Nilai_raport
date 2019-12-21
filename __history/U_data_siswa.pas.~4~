@@ -1,0 +1,54 @@
+unit U_data_siswa;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, StdCtrls, Buttons, sBitBtn, sEdit, sComboBox,
+  sGroupBox, sLabel;
+
+type
+  TF_data_siswa = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sLabel3: TsLabel;
+    sGroupBox2: TsGroupBox;
+    sLabel1: TsLabel;
+    sLabel2: TsLabel;
+    cb_kategori: TsComboBox;
+    Edit_key: TsEdit;
+    DBGrid1: TDBGrid;
+    sGroupBox3: TsGroupBox;
+    btn_ubah: TsBitBtn;
+    btn_tambah: TsBitBtn;
+    btn_hapus: TsBitBtn;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure tampil;
+  end;
+
+var
+  F_data_siswa: TF_data_siswa;
+
+implementation
+
+uses U_input_siswa, U_DM;
+
+{$R *.dfm}
+procedure TF_data_siswa.tampil;
+begin
+with DM.q_siswa do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select ROW_NUMBER() over (order by siswa_nis ) as NO, * from siswa';
+  Active:=True;
+  DBGrid1.DataSource:=DM.ds_siswa;
+  DM.ds_siswa.DataSet:=DM.q_siswa;
+end;
+
+end;
+
+end.

@@ -1,0 +1,75 @@
+unit U_login;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, acPNG, ExtCtrls, StdCtrls, Buttons, sBitBtn, sEdit, sLabel;
+
+type
+  TF_login = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    sLabelFX1: TsLabelFX;
+    Panel3: TPanel;
+    Label2: TLabel;
+    edit_username: TsEdit;
+    edit_pass: TsEdit;
+    Panel4: TPanel;
+    sBitBtn1: TsBitBtn;
+    Panel5: TPanel;
+    sBitBtn2: TsBitBtn;
+    Image1: TImage;
+    procedure sBitBtn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  F_login: TF_login;
+
+implementation
+
+uses U_DM, U_data_akademis, U_menu;
+
+{$R *.dfm}
+
+procedure TF_login.sBitBtn1Click(Sender: TObject);
+begin
+with dm.q_login do
+begin
+  Active:=False;
+  Close;
+  SQL.Clear;
+  SQL.Text:='select * from login where login_user='+QuotedStr(edit_username.Text)+' and login_pass='+QuotedStr(edit_pass.Text);
+  Active:=True;
+end;
+if DM.q_login.IsEmpty then
+begin
+  ShowMessage('User Tidak Valid!');
+  edit_username.Clear;
+  edit_pass.Clear;
+  edit_username.SetFocus;
+end
+else
+begin
+  if DM.q_login.FieldByName('jabatan').AsString='Admin' then
+  begin
+    ShowMessage('Selamat Datang, '+edit_username.Text+' !');
+     f_menu.Show;
+     F_login.Hide;
+
+  end
+  else if DM.q_login.FieldByName('jabatan').AsString='Pegawai' then
+          ShowMessage('Selamat Datang, '+edit_username.Text+' !');
+
+      f_menu.Show;
+    f_menu.Ribbon1.Enabled:=False;
+    F_login.Hide;
+
+end;
+end;
+
+end.

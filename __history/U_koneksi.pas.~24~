@@ -1,0 +1,40 @@
+unit U_koneksi;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, sPanel, StdCtrls, sEdit, Buttons, sBitBtn, sLabel,
+  sGroupBox;
+
+type
+  Tf_koneksi = class(TForm)
+    sGroupBox1: TsGroupBox;
+    sLabel1: TsLabel;
+    sLabel2: TsLabel;
+    sPanel1: TsPanel;
+    sLabel3: TsLabel;
+    edit_server: TsEdit;
+    edit_database: TsEdit;
+    sLabel4: TsLabel;
+    edit_username: TsEdit;
+    sLabel5: TsLabel;
+    edit_password: TsEdit;
+    sGroupBox2: TsGroupBox;
+    btn_set: TsBitBtn;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  f_koneksi: Tf_koneksi;
+
+implementation
+
+uses U_DM, U_menu;
+
+{$R *.dfm}
+
+end.

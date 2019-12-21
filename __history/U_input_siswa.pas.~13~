@@ -1,0 +1,80 @@
+unit U_input_siswa;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, sLabel, Mask, sMaskEdit, sCustomComboEdit, sTooledit, sEdit,
+  sMemo, sComboBox, sRadioButton, Buttons, sBitBtn, sGroupBox, ExtCtrls, sPanel,
+  ExtDlgs, sDialogs;
+
+type
+  Tf_input_siswa = class(TForm)
+    NIS: TsLabel;
+    edit_nis: TsEdit;
+    Nama: TsLabel;
+    edit_nama: TsEdit;
+    sLabel1: TsLabel;
+    edit_tempat: TsEdit;
+    edit_tgl: TsDateEdit;
+    sLabel2: TsLabel;
+    rb_lk: TsRadioButton;
+    rb_pr: TsRadioButton;
+    sLabel3: TsLabel;
+    cb_agama: TsComboBox;
+    sLabel4: TsLabel;
+    edit_wali: TsEdit;
+    sLabel5: TsLabel;
+    edit_wali_pkrjaan: TsEdit;
+    sLabel6: TsLabel;
+    edit_alamat: TsMemo;
+    sLabel7: TsLabel;
+    cb_kelas: TsComboBox;
+    sLabel8: TsLabel;
+    edit_angakatan: TsEdit;
+    sGroupBox1: TsGroupBox;
+    sPanel1: TsPanel;
+    sGroupBox2: TsGroupBox;
+    btn_edit: TsBitBtn;
+    btn_simpan: TsBitBtn;
+    Btn_kembali: TsBitBtn;
+    btn_data: TsBitBtn;
+    Image1: TImage;
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure bersih;
+  end;
+
+var
+  f_input_siswa: Tf_input_siswa;
+
+implementation
+
+{$R *.dfm}
+procedure Tf_input_siswa.bersih;
+begin
+ edit_nis.Clear;
+ edit_nis.SetFocus;
+ edit_nama.Clear;
+ edit_tempat.Clear;
+ edit_tgl.Date:=Now;
+  edit_wali.Clear;
+  edit_wali_pkrjaan.Clear;
+  edit_alamat.Clear;
+  edit_angakatan.Clear;
+  cb_agama.Text:='--Pilih--';
+  cb_kelas.Text:='--Pilih--';
+
+
+
+end;
+
+procedure Tf_input_siswa.FormShow(Sender: TObject);
+begin
+bersih;
+end;
+
+end.
